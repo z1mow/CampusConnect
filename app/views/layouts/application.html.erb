@@ -13,10 +13,41 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <style>
+    .chatbox {
+      height: 450px;
+    }
+    </style>
   </head>
-
   <body>
-    <%= yield %>
+    <div class="ui small inverted menu">
+      <div class="ui container">
+        <a class="item">
+          Home
+        </a>
+        <a class="item">
+          Messages
+        </a>
+        <div class="right menu">
+          <div class="ui dropdown item">
+            Language <i class="dropdown icon"></i>
+            <div class="menu">
+              <a class="item">English</a>
+              <a class="item">Russian</a>
+              <a class="item">Spanish</a>
+            </div>
+          </div>
+          <div class="item">
+              <div class="ui primary button">Sign Up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui container">
+      <%= yield %>
+    </div>
   </body>
 </html>
