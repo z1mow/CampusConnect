@@ -13,8 +13,6 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <style>
     .chatbox {
@@ -49,5 +47,15 @@
     <div class="ui container">
       <%= yield %>
     </div>
+    <!-- Include jQuery and Semantic UI JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <!-- Initialize the Semantic UI dropdown -->
+    <script>
+      $(document).ready(function() {
+        $('.ui.dropdown').dropdown();
+      });
+    </script>
   </body>
 </html>
