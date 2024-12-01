@@ -7,9 +7,8 @@ class MessagesController < ApplicationController
       message = user.messages.build(message_params)
   
       if message.save
-        redirect_to root_path
-      else
-        render :new 
+        ActionCable.server.broadcast "chatroom_channel",
+                                      foo: message.body
       end
     end
   
