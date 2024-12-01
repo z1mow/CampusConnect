@@ -1,1 +1,83 @@
-<h1>the root route</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Activity</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <style>
+  .chatbox {
+    height: 450px;
+  }
+  </style>
+</head>
+<body>
+  <div class="ui container" style="margin-top: 20px;">
+    <!-- Header Section -->
+    <header class="ui center aligned segment">
+      <h4 class="ui center aligned medium icon header">
+        <i class="circular users icon"></i>
+        Say Something
+      </h4>
+    </header>
+
+    <!-- Main Content -->
+    <div class="ui stackable two column grid">
+      <!-- Activity Feed -->
+      <div class="twelve wide column">
+        <div class="ui fluid raised card chatbox">
+          <div class="content">
+            <h4 class="ui header">Followers Activity</h4>
+            <div class="ui small feed">
+              <div class="event">
+                <div class="content">
+                  <div class="summary">
+                    <a>Nilü</a> added <a>Nurşen</a> as a friend
+                  </div>
+                </div>
+              </div>
+              <div class="event">
+                <div class="content">
+                  <div class="summary">
+                    <a>Nurşen</a> added <a>Sakir</a> as a friend
+                  </div>
+                </div>
+              </div>
+              <div class="event">
+                <div class="content">
+                  <div class="summary">
+                    <a>Umut</a> added <a>Ovgu</a> as a friend
+                  </div>
+                </div>
+              </div>
+              <div class="event">
+                <div class="content">
+                  <div class="summary">
+                    <a>Ahmet Bulut</a> signed up for the site.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <div class="four wide column">
+        <div class="ui fluid raised card chatbox">
+          <div class="content">
+            <nav>
+              <div class="ui inverted vertical menu">
+                <a class="active item">Home</a>
+                <a class="item">Messages</a>
+                <a class="item">Friends</a>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
