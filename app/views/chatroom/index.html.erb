@@ -12,45 +12,55 @@
   </style>
 </head>
 <body>
-  <div class="ui container" style="margin-top: 20px;">
-    <!-- Header Section -->
-    <header class="ui center aligned segment">
-      <h4 class="ui center aligned medium icon header">
-        <i class="circular users icon"></i>
-        Say Something
-      </h4>
-    </header>
+<h4 class="ui center aligned medium icon header">
+<i class="circular users icon"></i>
+Say Something
+</h4>
 
-    <!-- Main Content -->
-    <div class="ui stackable two column grid">
-      <!-- Activity Feed -->
-      <div class="twelve wide column">
-        <div class="ui fluid raised card chatbox">
-          <div class="content">
-            <h4 class="ui header">Followers Activity</h4>
-            <div class="ui small feed">
-              <%= render @messages %>
+<div class="ui two column grid">
+  <div class="twelve wide column">
+    <div class="ui fluid raised card chatbox">
+      <div class="content">
+        <div class="ui feed">
+          <div class="event">
+            <div class="content">
+              <div class="summary">
+                 <em>Ahmet Bulut</em>: Test message
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Navigation Menu -->
-      <div class="four wide column">
-        <div class="ui fluid raised card chatbox">
-          <div class="content">
-            <nav>
-              <div class="ui inverted vertical menu">
-                <a class="active item">Home</a>
-                <a class="item">Messages</a>
-                <a class="item">Friends</a>
-              </div>
-            </nav>
+      <div class="extra content">
+        <form class="ui reply form">
+          <div class="field">
+            <div class="ui fluid icon input">
+              <input type="text" placeholder="Enter a message...">
+              <i class="bordered inverted paper plane icon"></i>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 
+  <div class="four wide column">
+    <div class="ui fluid raised card chatbox">
+      <div class="content">
+        <div class="ui inverted vertical menu">
+          <a class="active item">
+            Home
+          </a>
+          <a class="item">
+            Messages
+          </a>
+          <a class="item">
+            Friends
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
