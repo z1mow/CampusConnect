@@ -106,6 +106,7 @@ GEM
     erubi (1.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hirb (0.7.3)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.3)
@@ -145,8 +146,6 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.16.7-aarch64-linux)
-      racc (~> 1.4)
     nokogiri (1.16.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-darwin)
@@ -296,12 +295,13 @@ DEPENDENCIES
   capybara
   debug
   error_highlight (>= 0.4.0)
+  hirb
   importmap-rails
   jbuilder
   puma (>= 5.0)
   rails (~> 7.2.2)
   rubocop-rails-omakase
-  selenium-webdriver
+  selenium-webdriver (= 4.27.0)
   sprockets-rails
   sqlite3 (>= 1.4)
   stimulus-rails
@@ -310,4 +310,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.3.3
+   2.5.23
