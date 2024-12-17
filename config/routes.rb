@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   resources :chatrooms, only: [:index, :show, :new, :create] do
     resources :messages, only: [:create]
-  root 'chatroom#index'
+  end
+
   post 'message', to: 'messages#create'
   post 'login', to: 'sessions#create'
   get 'login', to: 'sessions#new'
