@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @chatroom.name %> - Messages</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <style>
+  .chatbox {
+    height: 450px;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  </style>
+</head>
+<body>
+  <div class="ui container" style="margin-top: 20px;">
+    <!-- Header -->
+    <header class="ui center aligned segment">
+      <h4 class="ui center aligned medium icon header">
+        <i class="circular comments icon"></i>
+        <%= @chatroom.name %>
+      </h4>
+    </header>
+
+    <!-- Messages Section -->
+    <div class="ui fluid raised card chatbox">
+      <div class="content">
+        <h4 class="ui header">Messages</h4>
+        <div class="ui relaxed divided list">
+          <% @chatroom.messages.each do |message| %>
+            <div class="item">
+              <div class="content">
+                <div class="description">
+                  <%= message.content %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="extra content">
+        <%= form_with(model: [@chatroom, Message.new], local: true) do |f| %>
+          <div class="ui form">
+            <div class="field">
+              <%= f.text_area :content, placeholder: "Write your message..." %>
+            </div>
+            <%= f.submit "Send", class: "ui primary button" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div>
+      <%= link_to "Back to Chatrooms", chatrooms_path, class: "ui button" %>
+    </div>
+  </div>
+</body>
+</html>

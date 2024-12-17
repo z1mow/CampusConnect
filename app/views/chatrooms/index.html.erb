@@ -6,9 +6,11 @@
   <title>Chat Activity</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
   <style>
-  .chatbox {
-    height: 450px;
-  }
+    .chatbox {
+      height: 450px;
+      overflow-y: auto;
+      padding: 10px;
+    }
   </style>
 </head>
 <body>
@@ -17,42 +19,42 @@
     <header class="ui center aligned segment">
       <h4 class="ui center aligned medium icon header">
         <i class="circular users icon"></i>
-        Say Something
+        Chatrooms
       </h4>
     </header>
 
     <!-- Main Content -->
     <div class="ui stackable two column grid">
-      <!-- Activity Feed -->
+      <!-- Chatroom List -->
       <div class="twelve wide column">
         <div class="ui fluid raised card chatbox">
           <div class="content">
-            <h4 class="ui header">Followers Activity</h4>
-            <div class="ui small feed">
-              <%= render @messages %>
+            <h4 class="ui header">Available Chatrooms</h4>
+            <div class="ui relaxed divided list">
+              <% @chatrooms.each do |chatroom| %>
+                <div class="item">
+                  <i class="large comments outline middle aligned icon"></i>
+                  <div class="content">
+                    <%= link_to chatroom.name, chatroom_path(chatroom), class: "header" %>
+                  </div>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="extra content">
-            <%= form_for(@message, html: {class: "ui reply form", role: "form"}, url: message_path) do |f| %>
-              <div class="field">
-                <div class="ui fluid icon input">
-                  <%= f.text_field :body %>
-                  <%= f.button '<i class="bordered inverted orange edit icon"></i>'.html_safe %>
-                </div>
-              </div>
-            <% end %>
+            <%= link_to "Create New Chatroom", new_chatroom_path, class: "ui button primary" %>
           </div>
         </div>
       </div>
 
       <!-- Navigation Menu -->
       <div class="four wide column">
-        <div class="ui fluid raised card chatbox">
+        <div class="ui fluid raised card">
           <div class="content">
             <nav>
               <div class="ui inverted vertical menu">
-                <a class="active item">Home</a>
-                <a class="item">Messages</a>
+                <%= link_to "Home", root_path, class: "active item" %>
+                <%= link_to "Messages", chatrooms_path, class: "item" %>
                 <a class="item">Friends</a>
               </div>
             </nav>
@@ -61,6 +63,6 @@
       </div>
     </div>
   </div>
-
 </body>
 </html>
+

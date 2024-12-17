@@ -1,0 +1,11 @@
+<h1>Yeni Chatroom Oluştur</h1>
+
+<%= form_with model: @chatroom, local: true do |form| %>
+  <div>
+    <%= form.label :name, "Chatroom Adı" %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.submit "Oluştur" %>
+  </div>
+<% end %>
