@@ -9,52 +9,58 @@
 
     <%= yield :head %>
 
+    <!-- Semantic UI CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <!-- Diğer başlık öğeleri -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
     <style>
-    .chatbox {
-      height: 450px;
-    }
+      .chatbox {
+        height: 450px;
+      }
     </style>
   </head>
   <body>
     <div class="ui small inverted menu">
       <div class="ui container">
-        <a class="item">
-          Chatroom
-        </a>
-        <a class="item">
-          Messages
-        </a>
-        <div class="right menu">
-          <div class="ui dropdown item">
-            Account <i class="dropdown icon"></i>
-            <div class="menu">
-              <a class="item">Log out</a>
-              <a class="item">Log in</a>
-              <a class="item">Sign up</a>
-            </div>
-          </div>
-          <div class="item">
-              <div class="ui primary button">Sign Up</div>
-          </div>
-        </div>
+        <%= render 'layouts/navigation' %>
       </div>
     </div>
+
     <div class="ui container">
+      <%= render 'layouts/messages' %>
       <%= yield %>
     </div>
-    <!-- Include jQuery and Semantic UI JavaScript -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-
-    <!-- Initialize the Semantic UI dropdown -->
     <script>
+      scroll_bottom = function() {
+        if ($('#messages').length > 0) {
+          $('#messages').scrollTop($('#messages')[0].scrollHeight);
+        }
+      }
+
+      submit_message = function() {
+        $('#message_body').on('keydown', function(e) {
+          if (e.keyCode == 13) {
+            $('button').click();
+            e.target.value = "";
+          };
+        });
+      };
+
       $(document).ready(function() {
         $('.ui.dropdown').dropdown();
+        $('.message .close').on('click', function() {
+          $(this).closest('.message').transition('fade');
+        });
+        submit_message();
+        scroll_bottom();
       });
     </script>
   </body>

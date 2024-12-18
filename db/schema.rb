@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.2].define(version: 2024_12_01_123833) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_213607) do
->>>>>>> login
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.integer "user_id"
