@@ -4,6 +4,6 @@ class ChatroomChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    # Bağlantı koptuğunda yapılacak işlemler
   end
 end
