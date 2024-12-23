@@ -1,7 +1,5 @@
-<div class="event">
-  <div class="content">
-    <div class="summary">
-      <em><%= message.user.username %></em>: <%= message.body %>
-    </div>
-  </div>
+<div class="item">
+  <strong><%= message.user.username %>:</strong>
+  <%= message.content %>
+  <span class="date"><%= message.created_at.strftime("%d %b %Y, %H:%M") %></span>
 </div>

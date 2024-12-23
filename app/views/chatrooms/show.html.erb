@@ -1,60 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= @chatroom.name %> - Messages</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-  <style>
-  .chatbox {
-    height: 450px;
-    overflow-y: auto;
-    padding: 10px;
-  }
-  </style>
-</head>
-<body>
-  <div class="ui container" style="margin-top: 20px;">
-    <!-- Header -->
-    <header class="ui center aligned segment">
-      <h4 class="ui center aligned medium icon header">
-        <i class="circular comments icon"></i>
-        <%= @chatroom.name %>
-      </h4>
-    </header>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= @chatroom.name %> - Messages</title>
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <style>
+      .chatbox {
+        height: 450px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui container" style="margin-top: 20px;">
+      <!-- Chatroom Header -->
+      <header class="ui center aligned segment">
+        <h2 class="ui header">
+          <i class="comments icon"></i>
+          <div class="content">
+            <%= @chatroom.name %>
+            <div class="sub header"><%= @chatroom.description %></div>
+          </div>
+        </h2>
+      </header>
 
-    <!-- Messages Section -->
-    <div class="ui fluid raised card chatbox">
-      <div class="content">
-        <h4 class="ui header">Messages</h4>
-        <div class="ui relaxed divided list">
-          <% @chatroom.messages.each do |message| %>
-            <div class="item">
-              <div class="content">
-                <div class="description">
-                  <%= message.content %>
+      <!-- Messages Section -->
+      <div class="ui raised segment chatbox" id="messages">
+        <% if @chatroom.messages.any? %>
+          <div class="ui relaxed divided list">
+            <% @chatroom.messages.each do |message| %>
+              <div class="item">
+                <div class="content">
+                  <p>
+                    <strong><%= message.user.username %>:</strong>
+                    <%= message.content %>
+                  </p>
+                  <span class="date"><%= message.created_at.strftime("%d %b %Y, %H:%M") %></span>
                 </div>
               </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="extra content">
-        <%= form_with(model: [@chatroom, Message.new], local: true) do |f| %>
-          <div class="ui form">
-            <div class="field">
-              <%= f.text_area :content, placeholder: "Write your message..." %>
-            </div>
-            <%= f.submit "Send", class: "ui primary button" %>
+            <% end %>
           </div>
+        <% else %>
+          <p class="ui message">Henüz mesaj yok. İlk mesajı sen göndermek ister misin?</p>
         <% end %>
+      </div>
+
+      <!-- Message Form -->
+      <div class="ui form">
+        <%= form_with(model: [@chatroom, Message.new], local: true) do |form| %>
+          <div class="field">
+            <%= form.text_area :content, placeholder: "Mesajınızı buraya yazın...", class: "ui input", rows: 3 %>
+          </div>
+          <%= form.submit "Gönder", class: "ui primary button" %>
+        <% end %>
+      </div>
+
+      <!-- Back Button -->
+      <div style="margin-top: 20px;">
+        <%= link_to "Geri Dön", chatrooms_path, class: "ui button" %>
       </div>
     </div>
 
-    <!-- Back Button -->
-    <div>
-      <%= link_to "Back to Chatrooms", chatrooms_path, class: "ui button" %>
-    </div>
-  </div>
-</body>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script>
+      // Scroll to bottom of the messages container
+      const scrollBottom = () => {
+        const messages = document.getElementById('messages');
+        if (messages) {
+          messages.scrollTop = messages.scrollHeight;
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        scrollBottom();
+      });
+    </script>
+  </body>
 </html>

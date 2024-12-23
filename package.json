@@ -1,8 +1,23 @@
 {
   "dependencies": {
     "@doabit/semantic-ui-sass": "^2.4.5",
+    "@rails/actioncable": "^8.0.100",
+    "@rails/activestorage": "^8.0.100",
+    "@rails/ujs": "^7.1.3-4",
+    "@rails/webpacker": "5.4.4",
     "jquery": "^3.7.1",
     "popper.js": "^1.16.1",
-    "sass": "^1.81.0"
+    "sass": "^1.81.0",
+    "turbolinks": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.26.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3"
   }
 }

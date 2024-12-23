@@ -1,60 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "Campus Connect" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
+    <!-- Semantic UI CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <%= javascript_pack_tag "application" %>
+
+    <!-- Icon ve Manifest -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
     <style>
-    .chatbox {
-      height: 450px;
-    }
+      .chatbox {
+        height: 450px;
+        overflow-y: auto;
+      }
+
+      .ui.menu {
+        margin-bottom: 20px;
+      }
+
+      body {
+        background-color: #f9f9f9;
+      }
     </style>
   </head>
   <body>
+    <!-- Navigation Bar -->
     <div class="ui small inverted menu">
       <div class="ui container">
-        <a class="item">
-          Chatroom
-        </a>
-        <a class="item">
-          Messages
-        </a>
-        <div class="right menu">
-          <div class="ui dropdown item">
-            Account <i class="dropdown icon"></i>
-            <div class="menu">
-              <a class="item">Log out</a>
-              <a class="item">Log in</a>
-              <a class="item">Sign up</a>
-            </div>
-          </div>
-          <div class="item">
-              <div class="ui primary button">Sign Up</div>
-          </div>
-        </div>
+        <%= render 'layouts/navigation' %>
       </div>
     </div>
+
+    <!-- Flash Messages -->
+    <div class="ui container">
+      <% flash.each do |message_type, message_content| %>
+        <div class="ui <%= message_type == 'error' ? 'red' : 'green' %> message">
+          <i class="close icon"></i>
+          <div class="header">
+            <%= message_content %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Main Content -->
     <div class="ui container">
       <%= yield %>
     </div>
-    <!-- Include jQuery and Semantic UI JavaScript -->
+
+    <!-- Footer (Opsiyonel) -->
+    <footer class="ui inverted vertical footer segment" style="margin-top: 50px;">
+      <div class="ui center aligned container">
+        <p>&copy; 2024 Campus Connect. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-
-    <!-- Initialize the Semantic UI dropdown -->
     <script>
+      // Chat messages scroll to bottom
+      const scroll_bottom = function() {
+        if ($('#messages').length > 0) {
+          $('#messages').scrollTop($('#messages')[0].scrollHeight);
+        }
+      }
+
+      // Submit message on Enter key
+      const submit_message = function() {
+        $('#message_body').on('keydown', function(e) {
+          if (e.keyCode == 13) {
+            $('button').click();
+            e.target.value = "";
+            return false; // Prevent default form submission
+          }
+        });
+      };
+
+      // Document ready
       $(document).ready(function() {
         $('.ui.dropdown').dropdown();
+        $('.message .close').on('click', function() {
+          $(this).closest('.message').transition('fade');
+        });
+        submit_message();
+        scroll_bottom();
       });
     </script>
   </body>
