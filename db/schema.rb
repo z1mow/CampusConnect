@@ -10,12 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_19_185107) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_23_204418) do
+  create_table "community_groups", force: :cascade do |t|
+    t.string "name"
+    t.integer "creator_id"
+    t.boolean "is_trend", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "group_members", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "community_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "community_group_id", null: false
+    t.index ["community_group_id"], name: "index_messages_on_community_group_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -26,4 +43,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_19_185107) do
     t.string "name"
     t.string "email"
   end
+
+  add_foreign_key "messages", "community_groups"
 end

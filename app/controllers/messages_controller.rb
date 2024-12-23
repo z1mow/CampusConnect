@@ -1,26 +1,34 @@
 class MessagesController < ApplicationController
   before_action :require_user
+  before_action :set_community_group 
 
   def create
-    message = current_user.messages.build(message_params)
-    if message.save
-      # Yeni mesajı yayınla
-      ActionCable.server.broadcast "chatroom_channel", render_message(message)
+    @message = @community_group.messages.build(message_params)
+    @message.user = current_user
+
+    if @message.save
+      ActionCable.server.broadcast "chatroom_channel_#{@community_group.id}", render_message(@message)
+      redirect_to community_group_path(@community_group), notice: "Message sent successfully."
+    else
+      redirect_to community_group_path(@community_group), alert: "Failed to send message."
     end
-    redirect_to root_path
   end
 
   private
+
+  def set_community_group
+    @community_group = CommunityGroup.find(params[:community_group_id])
+  end
 
   def message_params
     params.require(:message).permit(:body)
   end
 
-  # Mesajın HTML formatında render edilmesi
   def render_message(message)
     ApplicationController.render(
-      partial: 'messages/message', # _message.html.erb
+      partial: 'messages/message',
       locals: { message: message }
     )
   end
 end
+#değişti 1
