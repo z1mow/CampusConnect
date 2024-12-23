@@ -44,5 +44,22 @@
       </div>
     </div>
   </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const messageInput = document.querySelector("input[name='message[body]']");
+    const messageForm = document.querySelector("form.ui.reply.form");
+
+    if (messageInput && messageForm) {
+      messageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault(); // Varsayılan Enter davranışını engelle
+          messageForm.submit(); // Formu gönder
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
