@@ -16,8 +16,8 @@
     <!-- Header Section -->
     <header class="ui center aligned segment">
       <h4 class="ui center aligned medium icon header">
-        <i class="circular users icon"></i>
-        Say Something
+        <%= image_tag '/saved_icon.png', alt: 'Custom Icon', class: 'ui circular image', style: 'width: 100px; height: 100px; display: block; margin: 0 auto;' %>
+        <div style="font-size: 24px; font-weight: bold; margin-top: 10px;">Say Something</div>
       </h4>
     </header>
 
@@ -27,7 +27,7 @@
       <div class="twelve wide column">
         <div class="ui fluid raised card chatbox">
           <div class="content">
-            <h4 class="ui header">Followers Activity</h4>
+            <h4 class="ui header">What's poppin?</h4>
             <div class="ui small feed">
               <%= render @messages %>
             </div>
@@ -36,8 +36,8 @@
             <%= form_for(@message, html: {class: "ui reply form", role: "form"}, url: message_path) do |f| %>
               <div class="field">
                 <div class="ui fluid icon input">
-                  <%= f.text_field :body %>
-                  <%= f.button '<i class="bordered inverted orange edit icon"></i>'.html_safe %>
+                  <%= f.text_field :body, placeholder: "Type your message here..." %>
+                  <%= f.button '<i class="purple paper plane icon"></i>'.html_safe %>
                 </div>
               </div>
             <% end %>
