@@ -10,7 +10,7 @@ document.addEventListener("turbolinks:load", () => {
       { channel: "ChatroomChannel", community_group_id: communityGroupId },
       {
         connected() {
-          console.log("Connected to ChatroomChannel");
+          console.log(`Connected to ChatroomChannel for Community Group ID: ${communityGroupId}`);
         },
 
         disconnected() {
@@ -19,11 +19,10 @@ document.addEventListener("turbolinks:load", () => {
 
         received(data) {
           console.log("Received data:", data);
-          if (messagesContainer) {
-            messagesContainer.insertAdjacentHTML("beforeend", data);
-          } else {
-            console.error("Messages container not found!");
-          }
+          // Yeni mesajı DOM'a ekle
+          messagesContainer.insertAdjacentHTML("beforeend", data);
+          // Otomatik kaydırma (opsiyonel)
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         },
       }
     );

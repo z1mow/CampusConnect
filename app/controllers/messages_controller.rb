@@ -31,4 +31,3 @@ class MessagesController < ApplicationController
     )
   end
 end
-#değişti 1
