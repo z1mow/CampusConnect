@@ -1,0 +1,10 @@
+<h1>Create a New Chatroom</h1>
+
+<%= form_with model: @community_group, url: community_groups_path, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Chatroom Name" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter chatroom name" %>
+  </div>
+
+  <%= f.submit "Create Chatroom", class: "btn btn-primary" %>
+<% end %>

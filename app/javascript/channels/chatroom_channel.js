@@ -1,22 +1,30 @@
 import consumer from "./consumer";
 
-consumer.subscriptions.create("ChatroomChannel", {
-  connected() {
-    console.log("Connected to ChatroomChannel");
-  },
+document.addEventListener("turbolinks:load", () => {
+  const messagesContainer = document.getElementById("messages");
 
-  disconnected() {
-    console.log("Disconnected from ChatroomChannel");
-  },
+  if (messagesContainer) {
+    const communityGroupId = messagesContainer.dataset.communityGroupId;
 
-  received(data) {
-    console.log("Received data:", data);
-    const messagesContainer = document.getElementById("messages");
-    if (messagesContainer) {
-      messagesContainer.insertAdjacentHTML("beforeend", data);
-    } else {
-      console.error("Messages container (id='messages') bulunamadı!");
-    }
+    consumer.subscriptions.create(
+      { channel: "ChatroomChannel", community_group_id: communityGroupId },
+      {
+        connected() {
+          console.log(`Connected to ChatroomChannel for Community Group ID: ${communityGroupId}`);
+        },
+
+        disconnected() {
+          console.log("Disconnected from ChatroomChannel");
+        },
+
+        received(data) {
+          console.log("Received data:", data);
+          // Yeni mesajı DOM'a ekle
+          messagesContainer.insertAdjacentHTML("beforeend", data);
+          // Otomatik kaydırma (opsiyonel)
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        },
+      }
+    );
   }
-  
 });

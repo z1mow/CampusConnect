@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Activity</title>
+  <title><%= @community_group.name %> Chatroom</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
   <style>
   .chatbox {
@@ -17,7 +17,7 @@
     <header class="ui center aligned segment">
       <h4 class="ui center aligned medium icon header">
         <i class="circular users icon"></i>
-        Say Something
+        <%= @community_group.name %>
       </h4>
     </header>
 
@@ -27,41 +27,39 @@
       <div class="twelve wide column">
         <div class="ui fluid raised card chatbox">
           <div class="content">
-            <h4 class="ui header">Followers Activity</h4>
-            <div class="ui small feed" id="messages">
+            <h4 class="ui header">Messages</h4>
+            <div class="ui small feed" id="messages" data-community-group-id="<%= @community_group.id %>">
               <%= render @messages %>
             </div>
           </div>
           <div class="extra content">
-            <%= form_for(@message, html: {class: "ui reply form", role: "form"}, url: message_path, remote: true) do |f| %>
+            <%= form_with(model: [@community_group, Message.new], local: true) do |f| %>
               <div class="field">
-                <div class="ui fluid icon input">
-                  <%= f.text_field :body %>
-                  <%= f.button '<i class="purple paper plane icon"></i>'.html_safe %>
-                </div>
+                <%= f.text_area :body, placeholder: "Write a message...", class: "form-control" %>
               </div>
+              <%= f.submit "Send", class: "btn btn-primary" %>
             <% end %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Navigation Menu -->
-      <div class="four wide column">
-        <div class="ui fluid raised card chatbox">
-          <div class="content">
-            <nav>
-              <div class="ui inverted vertical menu">
-                <a class="active item">Home</a>
-                <a class="item">Messages</a>
-                <a class="item">Friends</a>
-              </div>
-            </nav>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const messageInput = document.querySelector("input[name='message[body]']");
+    const messageForm = document.querySelector("form.ui.reply.form");
+
+    if (messageInput && messageForm) {
+      messageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault(); // Varsayılan Enter davranışını engelle
+          messageForm.submit(); // Formu gönder
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
-

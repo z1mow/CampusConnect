@@ -1,29 +1,31 @@
 <%= form_with model: @user, url: users_path, local: true, class: "ui form" do |f| %>
-    <div class="field">
-      <%= f.label :name, "Name" %>
-      <%= f.text_field :name, placeholder: "Your Name", class: "ui input" %>
+  <div class="field">
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, placeholder: "Your Name", class: "ui input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email, placeholder: "Your Email", class: "ui input" %>
+    <div class="ui pointing label">
+      Only emails with <strong>@live.acibadem.edu.tr</strong> or <strong>@acibadem.edu.tr</strong> are allowed.
     </div>
-  
-    <div class="field">
-      <%= f.label :email, "Email" %>
-      <%= f.email_field :email, placeholder: "Your Email", class: "ui input" %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :username, "Username" %>
-      <%= f.text_field :username, placeholder: "Choose a Username", class: "ui input" %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :password, "Password" %>
-      <%= f.password_field :password, placeholder: "Choose a Password", class: "ui input" %>
-    </div>
-  
-    <div class="field">
-      <%= f.label :password_confirmation, "Password Confirmation" %>
-      <%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "ui input" %>
-    </div>
-  
-    <%= f.submit "Sign Up", class: "ui orange button" %>
-  <% end %>
-  
+  </div>
+
+  <div class="field">
+    <%= f.label :username, "Username" %>
+    <%= f.text_field :username, placeholder: "Choose a Username", class: "ui input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, "Password" %>
+    <%= f.password_field :password, placeholder: "Choose a Password", class: "ui input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Password Confirmation" %>
+    <%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "ui input" %>
+  </div>
+
+  <%= f.submit "Sign Up", class: "ui orange button" %>
+<% end %>

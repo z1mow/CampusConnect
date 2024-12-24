@@ -1,0 +1,7 @@
+<h1>Community Groups</h1>
+
+<% @community_groups.each do |group| %>
+  <div>
+      <%= link_to "Go to #{group.name} Chatroom", community_group_path(group) %>
+  </div>
+<% end %>
