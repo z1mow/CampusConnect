@@ -2,68 +2,81 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Campus Connect" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Additional Head Content -->
     <%= yield :head %>
 
+    <!-- Favicon and Icons -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <!-- Semantic UI CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    >
+    
+    <!-- Custom Inline Styles -->
     <style>
       .chatbox {
         height: 450px;
       }
+      .ui.menu .right.menu .item {
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
+    <!-- Navbar -->
     <div class="ui small inverted menu">
       <div class="ui container">
         <a class="item" href="<%= root_path %>">
           Chatroom
         </a>
-        <a class="item" href="#">
-          Messages
-        </a>
         <div class="right menu">
           <% if logged_in? %>
-            <!-- Kullanıcı oturumu açıksa -->
+            <!-- User is logged in -->
             <div class="item">
-              <%= link_to "My Profile", user_path(current_user), class: "ui button primary" %>
+              <%= link_to "My Profile", profile_path, class: "ui button primary" %>
             </div>
-            <div class="ui dropdown item">
-              <i class="user icon"></i> <%= current_user.username %> <i class="dropdown icon"></i>
-              <div class="menu">
-                <%= link_to "Profile", user_path(current_user), class: "item" %>
-                <%= link_to "Log out", logout_path, method: :delete, class: "item" %>
-              </div>
+            <div class="item">
+              <%= link_to "Log Out", logout_path, method: :delete, class: "ui button red" %>
             </div>
           <% else %>
-            <!-- Kullanıcı oturumu kapalıysa -->
+            <!-- User is not logged in -->
             <div class="item">
-              <%= link_to "Sign Up", signup_path, class: "ui primary button" %>
+              <%= link_to "Sign Up", signup_path, class: "ui button primary" %>
             </div>
             <div class="item">
-              <%= link_to "Log in", login_path, class: "ui button" %>
+              <%= link_to "Log In", login_path, class: "ui button" %>
             </div>
           <% end %>
         </div>
       </div>
     </div>
+
+    <!-- Main Content -->
     <div class="ui container">
       <%= yield %>
     </div>
-    <!-- Include jQuery and Semantic UI JavaScript -->
+
+    <!-- JavaScript -->
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+
+    <!-- Semantic UI JavaScript and jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-    <!-- Initialize the Semantic UI dropdown -->
+    <!-- Initialize Semantic UI Components -->
     <script>
       $(document).ready(function() {
+        // Initialize Dropdowns
         $('.ui.dropdown').dropdown();
       });
     </script>

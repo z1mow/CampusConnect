@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
     #before_action :require_user
   
     def create
-      user = User.find(1) # login_logout kısmından sonra değişecek
+      user = User.find(9) # login_logout kısmından sonra değişecek
   
       message = user.messages.build(message_params)
   

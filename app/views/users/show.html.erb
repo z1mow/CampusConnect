@@ -1,7 +1,21 @@
 <h1><%= @user.name || @user.username %>'s Profile</h1>
 
 <div class="ui segment">
-  <p><strong>Username:</strong> <%= @user.username %></p>
-  <p><strong>Email:</strong> <%= @user.email %></p>
-  <p><strong>Joined On:</strong> <%= @user.created_at.strftime("%B %d, %Y") %></p>
+  <% if @user.profile_picture.attached? %>
+    <img src="<%= url_for(@user.profile_picture) %>" alt="Profil Fotoğrafı" class="ui small circular image">
+  <% else %>
+    <img src="<%= asset_path('default_profile_picture.png') %>" alt="Varsayılan Profil Fotoğrafı" class="ui small circular image">
+  <% end %>
+<%= link_to "Çıkış Yap", logout_path, method: :delete, class: "btn btn-danger" %>
+  <div class="profile-details">
+    <p><strong>Ad:</strong> <%= @user.name %></p>
+    <p><strong>Kullanıcı Adı:</strong> <%= @user.username %></p>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Kayıt Tarihi:</strong> <%= @user.created_at.strftime('%d %B %Y') %></p>
+  </div>
+
+  <div class="profile-actions">
+    <%= link_to "Profil Düzenle", edit_user_path(@user), class: "ui button primary" %>
+    <%= link_to "Çıkış Yap", logout_path, method: :delete, class: "ui button red" %>
+  </div>
 </div>

@@ -1,4 +1,9 @@
 class SessionsController < ApplicationController
+  def destroy
+    session[:user_id] = nil
+    lash[:notice] = "Başarıyla çıkış yaptınız."
+    redirect_to login_path
+  end
   def new
     # Login formunu göstermek için
   end
@@ -23,10 +28,17 @@ class SessionsController < ApplicationController
     redirect_to login_path, notice: "Çıkış başarılı!"
   end
 end
-
+class SessionsController < ApplicationController
+  def destroy
+    session[:user_id] = nil
+    flash[:notice] = "Başarıyla çıkış yaptınız."
+    redirect_to root_path
+  end
   def destroy
     session[:user_id] = nil
     flash[:success] = "You have successfully logged out"
     redirect_to login_path
   end
+end
+
 
