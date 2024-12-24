@@ -11,13 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_12_24_104437) do
-  create_table "chatrooms", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "community_groups", force: :cascade do |t|
     t.string "name"
     t.integer "creator_id"
@@ -35,26 +28,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_24_104437) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "body", null: false
-    t.integer "user_id", null: false
+    t.text "body"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "community_group_id", null: false
     t.index ["community_group_id"], name: "index_messages_on_community_group_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "username", null: false
-    t.string "password_digest", null: false
+    t.string "username"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "email"
   end
 
   add_foreign_key "group_members", "community_groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "messages", "community_groups"
-  add_foreign_key "messages", "users"
 end
