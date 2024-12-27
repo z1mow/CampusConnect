@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
   root 'chatroom#index'
+  
+  # Chatroom routes
+  get 'chatroom', to: 'chatroom#index', as: :chatroom
+  
+  # Messages routes
+  resources :messages, only: [:index, :create]
+  
+  # User routes
   resources :users, only: [:new, :create, :show, :edit, :update]
+  get 'account', to: 'users#show', as: :account
 
   get 'profile/edit', to: 'users#edit', as: :edit_profile
   patch 'profile', to: 'users#update', as: :update_profile
   get 'profile', to: 'users#show', as: 'profile'
   
   resources :community_groups do
+    member do
+      post 'join'
+    end
     resources :group_members, only: [:create, :destroy]
-    resources :messages, only: [:create] # Messages için nested routes
+    resources :messages, only: [:create]
     get 'chatroom', to: 'chatroom#index'
   end
 
@@ -17,11 +29,6 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'message', to: 'messages#create'
   get 'logout', to: 'sessions#destroy'
-
-  #post 'message', to: 'messages#create'
- 
-  # Manifest.json için varsayılan bir yanıt
-  #get '/manifest.json', to: ->(_) { [204, {}, ['']] }
 
   mount ActionCable.server, at: '/cable'
 end

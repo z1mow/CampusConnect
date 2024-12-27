@@ -1,7 +1,175 @@
-<h1>Community Groups</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .groups-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 1rem;
+    }
+    .groups-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .groups-title {
+      color: #2c3e50;
+      font-size: 1.8em;
+      margin: 0;
+    }
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .group-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 181, 173, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .group-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(31, 38, 135, 0.1);
+      border-color: #00B5AD;
+    }
+    .group-icon {
+      width: 48px;
+      height: 48px;
+      background: #00B5AD;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .group-icon i {
+      color: white;
+      font-size: 1.5em;
+    }
+    .group-name {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+    .group-description {
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .group-members {
+      color: #95a5a6;
+      font-size: 0.85em;
+      margin-bottom: 1rem;
+    }
+    .group-action {
+      margin-top: auto;
+    }
+    .join-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      border: none !important;
+      padding: 0.8rem !important;
+      border-radius: 8px !important;
+      width: 100% !important;
+      transition: all 0.3s ease !important;
+    }
+    .join-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
+    }
+    .chatroom-button {
+      background: white !important;
+      color: #00B5AD !important;
+      border: 1px solid #00B5AD !important;
+      padding: 0.8rem !important;
+      border-radius: 8px !important;
+      width: 100% !important;
+      transition: all 0.3s ease !important;
+    }
+    .chatroom-button:hover {
+      background: rgba(0, 181, 173, 0.05) !important;
+      transform: translateY(-2px);
+    }
+    .create-group-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      padding: 0.8rem 1.5rem !important;
+      border-radius: 8px !important;
+      transition: all 0.3s ease !important;
+    }
+    .create-group-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
+    }
+    .error-message {
+      background: #fff5f5;
+      color: #c53030;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid #feb2b2;
+    }
+    .error-message i {
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="groups-container">
+    <% if flash[:alert] %>
+      <div class="error-message">
+        <i class="exclamation circle icon"></i>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-<% @community_groups.each do |group| %>
-  <div>
-      <%= link_to "Go to #{group.name} Chatroom", community_group_path(group) %>
+    <div class="groups-header">
+      <h1 class="groups-title">Topluluk Grupları</h1>
+      <%= link_to new_community_group_path, class: "ui button create-group-button" do %>
+        <i class="plus icon"></i>
+        Yeni Grup Oluştur
+      <% end %>
+    </div>
+
+    <div class="groups-grid">
+      <% @community_groups.each do |group| %>
+        <div class="group-card">
+          <div class="group-icon">
+            <i class="users icon"></i>
+          </div>
+          <div class="group-name"><%= group.name %></div>
+          <% if group.description.present? %>
+            <div class="group-description"><%= group.description %></div>
+          <% end %>
+          <div class="group-members">
+            <i class="user icon"></i>
+            <%= pluralize(group.users.count, 'üye') %>
+          </div>
+          <div class="group-action">
+            <% if current_user.member_of?(group) %>
+              <%= link_to community_group_path(group), class: "ui button chatroom-button" do %>
+                <i class="users icon"></i>
+                Gruba Git
+              <% end %>
+            <% else %>
+              <%= button_to join_community_group_path(group), method: :post, class: "ui button join-button" do %>
+                <i class="plus icon"></i>
+                Gruba Katıl
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</body>
+</html>

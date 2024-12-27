@@ -1,21 +1,204 @@
-<h1><%= @community_group.name %></h1>
-<p>Created by: <%= @community_group.creator.username %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .group-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 1rem;
+    }
+    .group-header {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+    }
+    .group-title {
+      color: #2c3e50;
+      font-size: 2em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .group-title i {
+      color: #00B5AD;
+    }
+    .group-info {
+      color: #7f8c8d;
+      font-size: 1.1em;
+      margin-bottom: 1.5rem;
+    }
+    .group-description {
+      color: #34495e;
+      font-size: 1em;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .group-stats {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #95a5a6;
+    }
+    .stat-item i {
+      color: #00B5AD;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .chat-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      padding: 1rem 2rem !important;
+      border-radius: 8px !important;
+      transition: all 0.3s ease !important;
+      flex: 1;
+    }
+    .chat-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
+    }
+    .back-button {
+      background: white !important;
+      color: #00B5AD !important;
+      border: 1px solid #00B5AD !important;
+      padding: 1rem 2rem !important;
+      border-radius: 8px !important;
+      transition: all 0.3s ease !important;
+    }
+    .back-button:hover {
+      background: rgba(0, 181, 173, 0.05) !important;
+      transform: translateY(-2px);
+    }
+    .members-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+    }
+    .members-title {
+      color: #2c3e50;
+      font-size: 1.5em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .members-title i {
+      color: #00B5AD;
+    }
+    .members-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .member-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .member-item:hover {
+      transform: translateY(-2px);
+      background: #f1f2f3;
+    }
+    .member-avatar {
+      width: 36px;
+      height: 36px;
+      background: #00B5AD;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .member-avatar i {
+      color: white;
+    }
+    .member-name {
+      color: #2c3e50;
+      font-weight: 500;
+    }
+    .creator-badge {
+      background: rgba(0, 181, 173, 0.1);
+      color: #00B5AD;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="group-container">
+    <div class="group-header">
+      <h1 class="group-title">
+        <i class="users icon"></i>
+        <%= @community_group.name %>
+      </h1>
+      
+      <div class="group-stats">
+        <div class="stat-item">
+          <i class="user icon"></i>
+          <%= pluralize(@members.count, 'üye') %>
+        </div>
+        <div class="stat-item">
+          <i class="comments icon"></i>
+          <%= pluralize(@messages.count, 'mesaj') %>
+        </div>
+      </div>
 
-<h2>Members</h2>
-<ul>
-  <% @members.each do |member| %>
-    <li>
-      <%= member.username %>
-      <% if @community_group.created_by?(current_user) %> <!-- Sadece admin Remove'u görür -->
-        <%= link_to 'Remove', community_group_group_member_path(@community_group, member), method: :delete, class: "btn btn-danger btn-sm" %>
+      <% if @community_group.description.present? %>
+        <div class="group-description">
+          <%= @community_group.description %>
+        </div>
       <% end %>
-    </li>
-  <% end %>
-</ul>
 
-<% unless @community_group.users.include?(current_user) %> <!-- Kullanıcı üyeyse, kayıt olamaz -->
-  <%= form_with url: community_group_group_members_path(@community_group), method: :post, local: true do |f| %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.submit "Join Chatroom", class: "btn btn-success" %>
-  <% end %>
-<% end %>
+      <div class="action-buttons">
+        <% if current_user.member_of?(@community_group) %>
+          <%= link_to community_group_chatroom_path(@community_group), class: "ui button chat-button" do %>
+            <i class="comments icon"></i>
+            Sohbete Katıl
+          <% end %>
+        <% end %>
+        <%= link_to community_groups_path, class: "ui button back-button" do %>
+          <i class="arrow left icon"></i>
+          Geri Dön
+        <% end %>
+      </div>
+    </div>
+
+    <div class="members-section">
+      <h2 class="members-title">
+        <i class="users icon"></i>
+        Grup Üyeleri
+      </h2>
+      <div class="members-list">
+        <% @members.each do |member| %>
+          <div class="member-item">
+            <div class="member-avatar">
+              <i class="user icon"></i>
+            </div>
+            <div class="member-name">
+              <%= member.username %>
+            </div>
+            <% if member == @community_group.creator %>
+              <div class="creator-badge">Kurucu</div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
