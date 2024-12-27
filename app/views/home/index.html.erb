@@ -1,42 +1,63 @@
 <div style="text-align: center; margin: 20px;">
-  <h1 style="font-family: Arial, sans-serif; font-size: 28px; color: #333;">Bir şikayetin mi var?</h1>
-  <h1 style="font-family: Arial, sans-serif; font-size: 28px; color: #333;">O zaman doğru yerdesin.</h1>
-  <!-- Logo -->
+  <!-- Başlık -->
+  <h1 style="font-family: Arial, sans-serif; font-size: 28px; color: #231f20;"></h1>
+
+  <!-- Arka Plan Görseli -->
+  <div style="background-image: url(<%= asset_path('background8.jpeg') %>); background-size: cover; background-position: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+  <!-- Logo ve Merkez Resim -->
   <div style="margin: 0 auto; position: relative; width: 400px; height: 400px;">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      <%= image_tag("background5.jpeg", alt: "Website Logo", size: "250x250", style: "border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);") %>
+    <div style="position: absolute; top: -5%; left: 50%; transform: translate(-50%, 0%);">
+      <%= image_tag("background5.jpeg", alt: "Website Logo", size: "150x150", style: "border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);") %>
     </div>
 
-    <!-- Kutucuklar -->
-    <!-- Kutucuk 1 -->
-    <div style="position: absolute; top: 10%; right: 100%; transform: translate(-50%, 0);">
-      <%= link_to community_group_path(@default_groups[0]), style: "display: block; width: 250px; height: 150px; text-decoration: none; color: inherit; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
-        <h3 style="font-family: Arial, sans-serif; font-size: 14px; color: #007bff; margin: 0; text-transform: capitalize;"><%= @default_groups[0].name %></h3>
+    <!-- Konuşma Balonları -->
+    <!-- Kadın Hakları Grubu -->
+    <div class="speech-bubble-left kadin-haklari" style="position: absolute; top: 39%; right: 70%; transform: translate(50%, 0);">
+      <%= link_to community_group_path(@default_groups[0]), style: "text-decoration: none; color: inherit;" do %>
+        <h3><%= @default_groups[0].name %></h3>
       <% end %>
+      <div class="speech-bubble-triangle"></div>
     </div>
 
-    <!-- Kutucuk 2 -->
-    <div style="position: absolute; top: 10%; left: 100%; transform: translate(50%, 0);">
-      <%= link_to community_group_path(@default_groups[1]), style: "display: block; width: 250px; height: 150px; text-decoration: none; color: inherit; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
-        <h3 style="font-family: Arial, sans-serif; font-size: 14px; color: #007bff; margin: 0; text-transform: capitalize;"><%= @default_groups[1].name %></h3>
+    <!-- Hayvan Hakları Grubu -->
+    <div class="speech-bubble-right hayvan-haklari" style="position: absolute; top: 59%; left: -30%; transform: translate(50%, 0);">
+      <%= link_to community_group_path(@default_groups[1]), style: "text-decoration: none; color: inherit;" do %>
+        <h3><%= @default_groups[1].name %></h3>
       <% end %>
+      <div class="speech-bubble-triangle"></div>
     </div>
 
-    <!-- Kutucuk 3 -->
-    <div style="position: absolute; top: 60%; left: 100%; transform: translate(50%, 0);">
-      <%= link_to community_group_path(@default_groups[2]), style: "display: block; width: 250px; height: 150px; text-decoration: none; color: inherit; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
-        <h3 style="font-family: Arial, sans-serif; font-size: 14px; color: #007bff; margin: 0; text-transform: capitalize;"><%= @default_groups[2].name %></h3>
+    <!-- Okul Hakkında Şikayet -->
+    <div class="speech-bubble-right okul-sikayet" style="position: absolute; top: 99%; left: -30%; transform: translate(50%, 0);">
+      <%= link_to community_group_path(@default_groups[2]), style: "text-decoration: none; color: inherit;" do %>
+        <h3><%= @default_groups[2].name %></h3>
       <% end %>
+      <div class="speech-bubble-triangle"></div>
     </div>
 
-    <!-- Kutucuk 4 -->
-    <div style="position: absolute; top: 60%; right: 100%; transform: translate(-50%, 0);">
-      <%= link_to community_group_path(@default_groups[3]), style: "display: block; width: 250px; height: 150px; text-decoration: none; color: inherit; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" do %>
-        <h3 style="font-family: Arial, sans-serif; font-size: 14px; color: #007bff; margin: 0; text-transform: capitalize;"><%= @default_groups[3].name %></h3>
+    <!-- İnsan Hakları Grubu -->
+    <div class="speech-bubble-left insan-haklari" style="position: absolute; top: 79%; right: 70%; transform: translate(50%, 0);">
+      <%= link_to community_group_path(@default_groups[3]), style: "text-decoration: none; color: inherit;" do %>
+        <h3><%= @default_groups[3].name %></h3>
       <% end %>
+      <div class="speech-bubble-triangle"></div>
     </div>
-    
+
+    <!-- Diğer Gruplar -->
+    <div class="speech-bubble-left diger-gruplar" style="position: absolute; top: 119%; right: 70%; transform: translate(50%, 0%);">
+      <%= link_to community_groups_path, style: "text-decoration: none; color: inherit;" do %>
+        <h3>Diğer Gruplar</h3>
+      <% end %>
+      <div class="speech-bubble-triangle"></div>
+    </div>
+
     <!-- Oluştur Butonu -->
-    <div style="position: absolute; bottom: -80px; left: 30%; transform: translate(30%, 90%);">
-      <%= link_to "Oluştur", new_community_group_path, style: "display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif; font-size: 16px; transition: background-color 0.3s;" %>
+    <div class="speech-bubble-right olustur" style="position: absolute; top: 139%; left: -30%; transform: translate(50%, 0%);">
+      <%= link_to new_community_group_path, style: "text-decoration: none; color: inherit;" do %>
+        <h3>Oluştur</h3>
+      <% end %>
+      <div class="speech-bubble-triangle"></div>
     </div>
+  </div>
+</div>
