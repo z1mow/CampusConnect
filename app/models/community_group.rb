@@ -2,6 +2,10 @@ class CommunityGroup < ApplicationRecord
     belongs_to :creator, class_name: "User"
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
+    validates :category, presence: true, inclusion: { 
+      in: %w[study club project department other],
+      message: "%{value} geçerli bir kategori değil" 
+    }
 
     # Many-to-many relationship with User through GroupMember
     has_many :group_members, dependent: :destroy
