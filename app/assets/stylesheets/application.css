@@ -126,7 +126,7 @@
 
 /* Diğer Gruplar */
 .diger-gruplar {
-    background-color: #75cbf2; /* Açık turuncu */
+    background-color: #00B5AD; /* Açık turuncu */
 }
 
 .diger-gruplar .speech-bubble-triangle {
@@ -138,7 +138,7 @@
     height: 0;
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-right: 15px solid #75cbf2;/* Üçgenin rengi */
+    border-right: 15px solid #00B5AD;/* Üçgenin rengi */
 }
 /* İnsan Hakları Grubu */
 .olustur {

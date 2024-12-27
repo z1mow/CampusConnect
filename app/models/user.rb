@@ -13,19 +13,23 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validate :email_domain_validation
     validate :profile_picture_content_type
-  end
 
-  private
-
-  def profile_picture_content_type
-    if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/png image/jpg image/jpeg])
-      errors.add(:profile_picture, 'must be a PNG, JPG, or JPEG')
+    def member_of?(group)
+      community_groups.include?(group)
     end
-  end
 
-  def email_domain_validation
-    allowed_domains = ['@live.acibadem.edu.tr', '@acibadem.edu.tr']
-    unless allowed_domains.any? { |domain| email.end_with?(domain) }
-      errors.add(:email, 'must be from an allowed domain (e.g., @live.acibadem.edu.tr, @acibadem.edu.tr)')
+    private
+
+    def profile_picture_content_type
+      if profile_picture.attached? && !profile_picture.content_type.in?(%w[image/png image/jpg image/jpeg])
+        errors.add(:profile_picture, 'must be a PNG, JPG, or JPEG')
+      end
     end
-  end
+
+    def email_domain_validation
+      allowed_domains = ['@live.acibadem.edu.tr', '@acibadem.edu.tr']
+      unless allowed_domains.any? { |domain| email.end_with?(domain) }
+        errors.add(:email, 'must be from an allowed domain (e.g., @live.acibadem.edu.tr, @acibadem.edu.tr)')
+      end
+    end
+end
