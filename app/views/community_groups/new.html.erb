@@ -1,10 +1,32 @@
-<h1>Create a New Chatroom</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Community Groups</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<%= form_with model: @community_group, url: community_groups_path, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :name, "Chatroom Name" %>
-    <%= f.text_field :name, class: "form-control", placeholder: "Enter chatroom name" %>
-  </div>
+    <!-- Semantic UI Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 
-  <%= f.submit "Create Chatroom", class: "btn btn-primary" %>
-<% end %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+  </head>
+  <body>
+    <div class="ui container">
+      <h1 class="ui header">Create a New Chatroom</h1>
+
+      <%= form_with model: @community_group, url: community_groups_path, local: true, html: { class: "ui form" } do |f| %>
+        <!-- Chatroom Name Field -->
+        <div class="field">
+          <%= f.text_field :name, class: "ui input", placeholder: "Enter chatroom name" %>
+        </div>
+
+        <!-- Submit Button -->
+        <%= f.submit "Create Chatroom", class: "ui button primary" %>
+      <% end %>
+    </div>
+  </body> 
+</html>
+
+

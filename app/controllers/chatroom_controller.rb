@@ -5,6 +5,7 @@ class ChatroomController < ApplicationController
   def index
     @message = Message.new
     @messages = @community_group.messages.includes(:user) # Sadece bu grubun mesajları
+    @other_chatrooms = CommunityGroup.where.not(id: @community_group.id).limit(5)
   end
 
   private
@@ -22,3 +23,10 @@ class ChatroomController < ApplicationController
       end
     end
   end
+
+  def show
+    @community_group = CommunityGroup.find(params[:id])
+    @messages = @community_group.messages
+    @other_chatrooms = CommunityGroup.where.not(id: @community_group.id).limit(5)
+  end
+  

@@ -5,6 +5,8 @@ class CommunityGroupsController < ApplicationController
   
     def index #tüm chatroomları listeler
       @community_groups = CommunityGroup.all
+      @user_chatrooms = current_user.community_groups || []
+      @available_chatrooms = CommunityGroup.where.not(id: @user_chatrooms.pluck(:id)) || []
     end
   
     def show

@@ -16,10 +16,16 @@
     <!-- Header Section -->
     <header class="ui center aligned segment">
       <h4 class="ui center aligned medium icon header">
-        <i class="circular users icon"></i>
-        <%= @community_group.name %>
+        <!-- Custom Icon -->
+        <%= image_tag '/saved_icon.png', alt: 'Custom Icon', class: 'ui circular image', style: 'width: 100px; height: 100px; display: block; margin: 0 auto;' %>
+
+        <!-- Styled Community Group Name -->
+        <div style="font-size: 24px; font-weight: bold; margin-top: 10px;">
+          <%= @community_group.name %>
+        </div>
       </h4>
     </header>
+
 
     <!-- Main Content -->
     <div class="ui stackable two column grid">
@@ -33,12 +39,33 @@
             </div>
           </div>
           <div class="extra content">
-            <%= form_with(model: [@community_group, Message.new], local: true) do |f| %>
+            <%= form_with(model: [@community_group, Message.new], local: true, html: { class: "ui reply form" }) do |f| %>
               <div class="field">
-                <%= f.text_area :body, placeholder: "Write a message...", class: "form-control" %>
+                <div class="ui fluid icon input">
+                  <%= f.text_field :body, placeholder: "Type your message here..." %>
+                  <%= f.button '<i class="purple paper plane icon"></i>'.html_safe %>
+                </div>
               </div>
-              <%= f.submit "Send", class: "btn btn-primary" %>
             <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="four wide column">
+        <div class="ui raised card">
+          <div class="content">
+            <h4 class="ui header">Other Chatrooms</h4>
+            <div class="ui list">
+              <% @other_chatrooms.each do |chatroom| %>
+                <div class="item">
+                  <i class="comments outline icon"></i>
+                  <div class="content">
+                    <%= link_to chatroom.name, community_group_path(chatroom), class: "ui link" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>

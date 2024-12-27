@@ -1,7 +1,76 @@
-<h1>Community Groups</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Community Groups</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<% @community_groups.each do |group| %>
-  <div>
-      <%= link_to "Go to #{group.name} Chatroom", community_group_path(group) %>
-  </div>
-<% end %>
+    <!-- Semantic UI Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  </head>
+  <body>
+    <div class="ui container">
+      <!-- Header Section -->
+      <div class="ui grid">
+        <div class="eight wide column">
+          <h1 class="ui header">Community Groups</h1>
+        </div>
+        <div class="eight wide column right aligned">
+          <%= link_to 'Create New Chatroom', new_community_group_path, class: 'ui button green' %>
+        </div>
+      </div>
+      
+      <!-- Two Column Layout -->
+      <div class="ui stackable two column grid" style="margin-top: 2em;">
+        <!-- Left Column: Chatrooms User is a Member Of -->
+        <div class="column">
+          <h2 class="ui dividing header">Your Chatrooms</h2>
+          <div class="ui divided items">
+            <% if @user_chatrooms.any? %>
+              <% @user_chatrooms.each do |group| %>
+                <div class="item">
+                  <div class="content">
+                    <div class="extra">
+                      <%= link_to "#{group.name}", community_group_path(group), class: "ui button blue" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="ui message">
+                <p>You are not a member of any chatroom. <%= link_to 'Create one', new_community_group_path, class: 'ui button green' %>.</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Right Column: Available Chatrooms to Join -->
+        <div class="column">
+          <h2 class="ui dividing header">Available Chatrooms</h2>
+          <div class="ui divided items">
+            <% if @available_chatrooms.any? %>
+              <% @available_chatrooms.each do |group| %>
+                <div class="item">
+                  <div class="content">
+                    <div class="extra">
+                      <%= link_to "#{group.name}", community_group_path(group), class: "ui button green" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="ui message">
+                <p>No available chatrooms to join.</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
