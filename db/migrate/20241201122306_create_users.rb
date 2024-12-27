@@ -5,5 +5,6 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.string :password_digest
       t.timestamps
     end
+    addindex :users, :email, unique: true
   end
 end

@@ -2,7 +2,7 @@ class User < ApplicationRecord
     has_secure_password
     has_many :messages
 
-    has_one :profile, dependent: :destroy
+    #has_one :profile, dependent: :destroy
     has_many :photos, dependent: :destroy
     has_many :group_members, dependent: :destroy
     has_many :community_groups, through: :group_members

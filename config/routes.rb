@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'chatroom#index'
+  root "home#index"
   resources :users, only: [:new, :create]
   
   resources :community_groups do
