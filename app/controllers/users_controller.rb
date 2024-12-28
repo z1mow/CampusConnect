@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def edit
@@ -32,6 +32,14 @@ class UsersController < ApplicationController
     else
       flash.now[:error] = "Profil güncellenirken bir hata oluştu."
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def search
+    if params[:query].present?
+      @users = User.where("name LIKE ?", "%#{params[:query]}%")
+    else
+      @users = []
     end
   end
 

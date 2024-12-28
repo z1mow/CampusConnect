@@ -63,9 +63,15 @@
           <i class="comments icon"></i>
           Chatroom
         <% end %>
-        <%= link_to messages_path, class: "item" do %>
-          <i class="envelope icon"></i>
-          Messages
+        <% if logged_in? %>
+        <div class="item">
+          <%= form_with url: user_search_path, method: :get, local: true, class: "ui action input" do %>
+            <%= text_field_tag :query, params[:query], placeholder: "Kullanıcı Ara", class: "prompt" %>
+            <button type="submit" class="ui teal button">
+              <i class="search icon"></i>
+            </button>
+          <% end %>
+        </div>
         <% end %>
         <div class="right menu">
           <% if logged_in? %>

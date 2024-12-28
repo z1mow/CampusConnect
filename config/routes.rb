@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show, :edit, :update]
   get 'account', to: 'users#show', as: :account
 
+  get 'search', to: 'users#search', as: 'user_search'
+
   get 'profile/edit', to: 'users#edit', as: :edit_profile
   patch 'profile', to: 'users#update', as: :update_profile
   get 'profile', to: 'users#show', as: 'profile'
