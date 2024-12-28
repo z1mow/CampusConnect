@@ -6,8 +6,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres # PostgreSQL kullanıcı adınız
-  password: # PostgreSQL şifreniz (varsa)
+  username: admin # PostgreSQL kullanıcı adınız
+  password: <%= ENV['POSTGRES_PASSWORD'] %> # PostgreSQL şifreniz (varsa)
   host: localhost # PostgreSQL sunucu adresi (genellikle localhost)
 
 development:
