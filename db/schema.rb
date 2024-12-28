@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_01_040000) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,16 +45,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
   create_table "community_groups", force: :cascade do |t|
     t.string "name"
     t.integer "creator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.text "description"
     t.string "category"
     t.boolean "default"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "group_members", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "community_group_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "community_group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["community_group_id"], name: "index_group_members_on_community_group_id"
@@ -61,9 +64,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.integer "user_id"
+    t.bigint "community_group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "community_group_id", null: false
     t.index ["community_group_id"], name: "index_messages_on_community_group_id"
   end
 
@@ -72,9 +75,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.string "profile_picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "profile_picture"
     t.index ["name"], name: "index_users_on_name"
   end
 
