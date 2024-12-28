@@ -33,6 +33,40 @@
       border: 1px solid rgba(0, 181, 173, 0.1);
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .group-card.member {
+      background: linear-gradient(to bottom right, rgba(0, 181, 173, 0.05), rgba(0, 181, 173, 0.1));
+      border: 1px solid rgba(0, 181, 173, 0.3);
+    }
+    .group-card.member::before {
+      content: "Üyesisiniz";
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      background: #00B5AD;
+      color: white;
+      padding: 0.3rem 2rem;
+      font-size: 0.8em;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .group-card.creator {
+      background: linear-gradient(to bottom right, rgba(0, 181, 173, 0.08), rgba(0, 181, 173, 0.15));
+      border: 1px solid rgba(0, 181, 173, 0.4);
+    }
+    .group-card.creator::before {
+      content: "Kurucusunuz";
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      background: #009c95;
+      color: white;
+      padding: 0.3rem 2rem;
+      font-size: 0.8em;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .group-card:hover {
       transform: translateY(-4px);
@@ -87,17 +121,18 @@
       box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
     }
     .chatroom-button {
-      background: white !important;
-      color: #00B5AD !important;
-      border: 1px solid #00B5AD !important;
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      border: none !important;
       padding: 0.8rem !important;
       border-radius: 8px !important;
       width: 100% !important;
       transition: all 0.3s ease !important;
+      text-align: center;
     }
     .chatroom-button:hover {
-      background: rgba(0, 181, 173, 0.05) !important;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
     }
     .create-group-button {
       background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
@@ -142,7 +177,7 @@
 
     <div class="groups-grid">
       <% @community_groups.each do |group| %>
-        <div class="group-card">
+        <div class="group-card <%= current_user == group.creator ? 'creator' : (current_user.member_of?(group) ? 'member' : '') %>">
           <div class="group-icon">
             <i class="users icon"></i>
           </div>
@@ -155,16 +190,9 @@
             <%= pluralize(group.users.count, 'üye') %>
           </div>
           <div class="group-action">
-            <% if current_user.member_of?(group) %>
-              <%= link_to community_group_path(group), class: "ui button chatroom-button" do %>
-                <i class="users icon"></i>
-                Gruba Git
-              <% end %>
-            <% else %>
-              <%= button_to join_community_group_path(group), method: :post, class: "ui button join-button" do %>
-                <i class="plus icon"></i>
-                Gruba Katıl
-              <% end %>
+            <%= link_to community_group_path(group), class: "ui button chatroom-button" do %>
+              <i class="users icon"></i>
+              Gruba Git
             <% end %>
           </div>
         </div>

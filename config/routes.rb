@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :community_groups do
     member do
       post 'join'
+      delete 'leave'
     end
     resources :group_members, only: [:create, :destroy]
     resources :messages, only: [:create]

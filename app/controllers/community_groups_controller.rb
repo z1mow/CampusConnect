@@ -30,10 +30,40 @@ class CommunityGroupsController < ApplicationController
       @community_group = CommunityGroup.find(params[:id])
       
       if current_user.member_of?(@community_group)
-        redirect_to community_groups_path, alert: "Zaten bu grubun üyesisiniz."
+        redirect_to @community_group, alert: "Zaten bu grubun üyesisiniz."
       else
         @community_group.users << current_user
-        redirect_to community_group_chatroom_path(@community_group), notice: "Gruba başarıyla katıldınız!"
+        redirect_to @community_group, notice: "Gruba başarıyla katıldınız!"
+      end
+    end
+  
+    def leave
+      @community_group = CommunityGroup.find(params[:id])
+      
+      if current_user == @community_group.creator
+        redirect_to @community_group, alert: "Grup kurucusu gruptan ayrılamaz."
+      elsif current_user.member_of?(@community_group)
+        @community_group.users.delete(current_user)
+        redirect_to community_groups_path, notice: "Gruptan başarıyla ayrıldınız."
+      else
+        redirect_to @community_group, alert: "Bu grubun üyesi değilsiniz."
+      end
+    end
+  
+    def destroy
+      @community_group = CommunityGroup.find(params[:id])
+      
+      if current_user == @community_group.creator
+        if @community_group.destroy
+          flash[:notice] = "Grup başarıyla silindi."
+          redirect_to community_groups_path
+        else
+          flash[:alert] = "Grup silinirken bir hata oluştu."
+          redirect_to community_group_path(@community_group)
+        end
+      else
+        flash[:alert] = "Bu işlem için yetkiniz yok."
+        redirect_to community_group_path(@community_group)
       end
     end
   
