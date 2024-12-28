@@ -9,7 +9,11 @@ class User < ApplicationRecord
     has_one_attached :profile_picture
   
     validates :name, presence: true, length: { maximum: 50 }
-    validates :username, presence: true, uniqueness: true, length: { maximum: 50 }
+    validates :username, presence: true, 
+                        uniqueness: { case_sensitive: false },
+                        length: { minimum: 3, maximum: 12 },
+                        format: { with: /\A[a-zA-Z0-9_]+\z/,
+                                 message: "sadece harf, rakam ve alt çizgi (_) içerebilir" }
     validates :email, presence: true, uniqueness: true
     validate :email_domain_validation
     validate :profile_picture_content_type

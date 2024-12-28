@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user, only: [:show, :edit, :update]
+  before_action :require_user, only: [:show, :edit, :update, :account]
 
   def new
     @user = User.new
@@ -33,6 +33,10 @@ class UsersController < ApplicationController
       flash.now[:error] = "Profil güncellenirken bir hata oluştu."
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def account
+    @user = current_user
   end
 
   private

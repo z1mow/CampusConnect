@@ -112,6 +112,8 @@
       background: #f8f9fa;
       border-radius: 8px;
       transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
     .member-item:hover {
       transform: translateY(-2px);
@@ -141,6 +143,21 @@
     .member-name {
       color: #2c3e50;
       font-weight: 500;
+      margin-right: auto;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .member-name:hover {
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+      background: #f8f9fa;
+      padding: 2px 5px;
+      margin: -2px -5px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .creator-badge {
       background: rgba(0, 181, 173, 0.1);
@@ -207,6 +224,35 @@
       color: white !important;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    }
+    .remove-member {
+      margin-left: 1rem !important;
+      padding: 0.35rem 0.5rem !important;
+      font-size: 0.7em !important;
+      background: white !important;
+      color: #e74c3c !important;
+      border: 1px solid #e74c3c !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.2rem !important;
+      transition: all 0.2s ease !important;
+      border-radius: 6px !important;
+      min-width: auto !important;
+      white-space: nowrap !important;
+      position: absolute !important;
+      right: 0.8rem !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 2 !important;
+    }
+    .remove-member:hover {
+      background: #e74c3c !important;
+      color: white !important;
+      transform: translateY(-50%) scale(1.02) !important;
+    }
+    .remove-member .icon {
+      margin: 0 !important;
+      font-size: 0.85em !important;
     }
   </style>
 </head>
@@ -289,6 +335,14 @@
             </div>
             <% if member == @community_group.creator %>
               <div class="creator-badge">Kurucu</div>
+            <% elsif current_user == @community_group.creator && member != current_user %>
+              <%= button_to community_group_group_member_path(@community_group, member), 
+                  method: :delete,
+                  class: "ui mini red button remove-member",
+                  data: { confirm: "#{member.username} kullanıcısını gruptan çıkarmak istediğinize emin misiniz?" } do %>
+                <i class="times icon"></i>
+                Gruptan Çıkar
+              <% end %>
             <% end %>
           </div>
         <% end %>
