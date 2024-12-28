@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'community_groups#index'
+  root 'pages#home'
   
   # Chatroom routes
   get 'chatroom', to: 'chatroom#index', as: :chatroom
