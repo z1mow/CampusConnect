@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "profile_picture"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
