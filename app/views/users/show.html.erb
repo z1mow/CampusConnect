@@ -7,10 +7,14 @@
     <img src="<%= asset_path('default_profile_picture.png') %>" alt="Varsayılan Profil Fotoğrafı" class="ui small circular image">
   <% end %>
   <div class="profile-details">
-    <p><strong>Ad:</strong> <%= @user.name %></p>
-    <p><strong>Kullanıcı Adı:</strong> <%= @user.username %></p>
-    <p><strong>Email:</strong> <%= @user.email %></p>
-    <p><strong>Kayıt Tarihi:</strong> <%= @user.created_at.strftime('%d %B %Y') %></p>
+  <p><strong>Ad:</strong> <%= @user.name %></p>
+  <p><strong>Kullanıcı Adı:</strong> <%= @user.username %></p>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+  <p><strong>Kayıt Tarihi:</strong> <%= @user.created_at.strftime('%d %B %Y') %></p>
+  <p><strong>Department:</strong> <%= @user.department %></p>
+  <p><strong>Title:</strong> <%= @user.title %></p>
+  <p><strong>Student Class:</strong> <%= @user.student_class %></p>
+
   </div>
 
   <div class="profile-actions">
