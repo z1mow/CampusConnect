@@ -37,6 +37,7 @@ gem 'actioncable'
 gem 'redis'
 gem 'listen', '~> 3.7'
 gem 'image_processing', '~> 1.2'
+gem 'pg'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]

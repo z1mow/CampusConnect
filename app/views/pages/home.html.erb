@@ -22,6 +22,50 @@
     </div>
   </div>
 
+
+
+  <% if logged_in? %>
+    <div class="features-section">
+  <h2>Ana Gruplarımız</h2>
+  <div class="features-grid">
+    <!-- Kadın Hakları Grubu -->
+    <div class="feature-card">
+      <%= link_to community_group_path(@default_groups[0]), style: "text-decoration: none; color: inherit;" do %>
+        <i class="users icon"></i>
+        <h3><%= @default_groups[0].name %></h3>
+        <p><%= truncate(@default_groups[0].description, length: 100) %></p>
+      <% end %>
+    </div>
+
+    <!-- Hayvan Hakları Grubu -->
+    <div class="feature-card">
+      <%= link_to community_group_path(@default_groups[1]), style: "text-decoration: none; color: inherit;" do %>
+        <i class="comments icon"></i>
+        <h3><%= @default_groups[1].name %></h3>
+        <p><%= truncate(@default_groups[1].description, length: 100) %></p>
+      <% end %>
+    </div>
+
+    <!-- Okul Hakkında Şikayet Grubu -->
+    <div class="feature-card">
+      <%= link_to community_group_path(@default_groups[2]), style: "text-decoration: none; color: inherit;" do %>
+        <i class="calendar icon"></i>
+        <h3><%= @default_groups[2].name %></h3>
+        <p><%= truncate(@default_groups[2].description, length: 100) %></p>
+      <% end %>
+    </div>
+
+    <!-- İnsan Hakları Grubu -->
+    <div class="feature-card">
+      <%= link_to community_group_path(@default_groups[3]), style: "text-decoration: none; color: inherit;" do %>
+        <i class="shield icon"></i>
+        <h3><%= @default_groups[3].name %></h3>
+        <p><%= truncate(@default_groups[3].description, length: 100) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
   <div class="features-section">
     <h2>Neler Sunuyoruz?</h2>
     <div class="features-grid">
@@ -50,18 +94,6 @@
       </div>
     </div>
   </div>
-
-  <% if logged_in? %>
-    <div class="groups-section">
-      <h2>Popüler Topluluklar</h2>
-      <div class="groups-grid">
-        <%= link_to community_groups_path, class: "explore-button" do %>
-          <i class="compass icon"></i>
-          Tüm Toplulukları Keşfet
-        <% end %>
-      </div>
-    </div>
-  <% end %>
 </div>
 
 <style>

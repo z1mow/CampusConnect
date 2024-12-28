@@ -6,6 +6,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
+
 
     <!-- Additional Head Content -->
     <%= yield :head %>
@@ -57,9 +59,21 @@
           <i class="graduation cap icon"></i>
           CampusConnect
         <% end %>
+        <div class="ui container">
         <%= link_to community_groups_path, class: "item" do %>
           <i class="users icon"></i>
           Topluluk Grupları
+        <% end %>
+        </div>
+        <% if logged_in? %>
+        <div class="item">
+          <%= form_with url: user_search_path, method: :get, local: true, class: "ui action input" do %>
+            <%= text_field_tag :query, params[:query], placeholder: "Kullanıcı Ara", class: "prompt" %>
+            <button type="submit" class="ui teal button">
+              <i class="search icon"></i>
+            </button>
+          <% end %>
+        </div>
         <% end %>
         <div class="right menu">
           <% if logged_in? %>

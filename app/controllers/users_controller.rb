@@ -17,10 +17,15 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @community_groups = @user.community_groups
+    if params[:id].present?
+      @user = User.find(params[:id])
+      @community_groups = @user.community_groups
+    else
+      @user = current_user
+    end
   end
 
+  
   def edit
     @user = current_user
   end
@@ -38,6 +43,14 @@ class UsersController < ApplicationController
 
   def account
     @user = current_user
+  end
+
+  def search
+    if params[:query].present?
+      @users = User.where("name LIKE ?", "%#{params[:query]}%")
+    else
+      @users = []
+    end
   end
 
   private

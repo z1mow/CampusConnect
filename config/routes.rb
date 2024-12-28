@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'pages#home'
+  #root "home#index"
   
   # Chatroom routes
   get 'chatroom', to: 'chatroom#index', as: :chatroom
@@ -7,9 +8,10 @@ Rails.application.routes.draw do
   # Messages routes
   resources :messages, only: [:index, :create]
   
-  # User routes
   resources :users, only: [:new, :create, :show, :edit, :update]
   get 'account', to: 'users#show', as: :account
+
+  get 'search', to: 'users#search', as: 'user_search'
 
   get 'profile/edit', to: 'users#edit', as: :edit_profile
   patch 'profile', to: 'users#update', as: :update_profile

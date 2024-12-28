@@ -45,3 +45,125 @@
   .btn:hover {
     opacity: 0.8;
   }
+
+/* Genel Balon Stili */
+.speech-bubble-left, .speech-bubble-right {
+    position: relative;
+    border-radius: 15px;
+    padding: 15px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Kadın Hakları Grubu */
+.kadin-haklari {
+    background-color: #ea4f9c; /* Açık pembe */
+}
+
+.kadin-haklari .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #ea4f9c; /* Üçgenin rengi */
+}
+
+/* Hayvan Hakları Grubu */
+.hayvan-haklari {
+    background-color: #82cba9; /* Açık yeşil */
+}
+
+.hayvan-haklari .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #82cba9; /* Üçgenin rengi */
+}
+
+/* Diğer Gruplar İçin Renkler */
+.okul-sikayet {
+    background-color: #f37122; /* Altın sarısı */
+}
+
+.okul-sikayet .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #f37122; /* Üçgenin rengi */
+}
+
+/* İnsan Hakları Grubu */
+.insan-haklari {
+    background-color: #0063af; /* Açık mavi */
+}
+
+.insan-haklari .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #0063af; /* Üçgenin rengi */
+}
+
+/* Diğer Gruplar */
+.diger-gruplar {
+    background-color: #00B5AD; /* Açık turuncu */
+}
+
+.diger-gruplar .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #00B5AD;/* Üçgenin rengi */
+}
+/* İnsan Hakları Grubu */
+.olustur {
+    background-color: #ed1e24; /* Açık mavi */
+}
+
+.olustur .speech-bubble-triangle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #ed1e24;/* Üçgenin rengi */
+}
+
+.footer-heading {
+    position: absolute;
+    bottom: 0; /* Sayfanın en altına yerleştir */
+    left: 50%; /* Yatayda ortala */
+    transform: translateX(-50%); /* Ortalamayı tam yap */
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    color: #231f20;
+    margin: 0; /* Gereksiz boşlukları kaldır */
+}

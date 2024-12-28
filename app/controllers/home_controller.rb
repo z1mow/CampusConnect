@@ -1,6 +1,7 @@
-class PagesController < ApplicationController
+class HomeController < ApplicationController
   before_action :require_user
-    def home
+  
+    def index
       @default_groups = CommunityGroup.where(default: true)
     end
-end 
+  end

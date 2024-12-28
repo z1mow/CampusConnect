@@ -6,3 +6,32 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
+#   end
+#if Rails.env.development? || Rails.env.test?
+#    User.transaction do
+#      1.upto(1000) do |i|
+#        User.create!(
+#          email: "user#{i}@live.acibadem.edu.tr",
+#          username: "user#{i}",
+#          password: "password#{i}",
+#          name: "User #{i}"
+#        )
+#      end
+#    end
+#  else
+#    puts "Bu script sadece test veya development ortamında çalıştırılabilir."
+#  end
+admin_user = User.create!(
+  name: "admin",
+  username: "admin",
+  email: "admin@acibadem.edu.tr",
+  password: "password",
+  password_confirmation: "password"
+)
+
+CommunityGroup.create!([
+  { name: "Kadın Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
+  { name: "Hayvan Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
+  { name: "İnsan Hakları Grubu", creator_id: admin_user.id, default: true, category: "other", description:"A"},
+  { name: "Okul Hakkında Şikayet", creator_id: admin_user.id, default: true, category: "other", description:"A"}
+])
