@@ -22,6 +22,10 @@ class User < ApplicationRecord
       community_groups.include?(group)
     end
 
+    def full_name
+      name || username
+    end
+
     private
 
     def profile_picture_content_type

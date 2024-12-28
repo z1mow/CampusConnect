@@ -1,12 +1,207 @@
-<h1>Arama Sonuçları</h1>
-<% if @users.any? %>
-  <ul>
-    <% @users.each do |user| %>
-      <li>
-        <%= link_to user.name, user_path(user) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Sonuç bulunamadı.</p>
-<% end %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .search-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 1rem;
+    }
+
+    .search-header {
+      margin-bottom: 2rem;
+    }
+
+    .search-title {
+      color: #2c3e50;
+      font-size: 1.8em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-title i {
+      color: #00B5AD;
+    }
+
+    .search-info {
+      color: #7f8c8d;
+      font-size: 1em;
+    }
+
+    .search-results {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .user-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.07);
+      border: 1px solid rgba(0, 181, 173, 0.1);
+    }
+
+    .user-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.1);
+      border-color: #00B5AD;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      background: #00B5AD;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-avatar i {
+      color: white;
+      font-size: 1.8em;
+    }
+
+    .user-info {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .user-name {
+      color: #2c3e50;
+      font-size: 1.2em;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      line-height: 1;
+    }
+
+    .user-meta {
+      color: #95a5a6;
+      font-size: 0.9em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 0.2rem;
+    }
+
+    .user-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+      line-height: 1;
+    }
+
+    .user-meta span i {
+      color: #00B5AD;
+      font-size: 1.1em;
+      min-width: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      margin: 0;
+    }
+
+    .user-meta span span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: #7f8c8d;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.07);
+    }
+
+    .no-results i {
+      font-size: 3em;
+      color: #00B5AD;
+      margin-bottom: 1rem;
+    }
+
+    .no-results h3 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <div class="search-header">
+      <h1 class="search-title">
+        <i class="search icon"></i>
+        Arama Sonuçları
+      </h1>
+      <% if @users.present? %>
+        <div class="search-info">
+          "<%= params[:q] %>" için <%= pluralize(@users.count, 'sonuç') %> bulundu
+        </div>
+      <% end %>
+    </div>
+
+    <div class="search-results">
+      <% if @users.present? %>
+        <% @users.each do |user| %>
+          <%= link_to user_path(user), class: "user-card" do %>
+            <div class="user-avatar">
+              <i class="user icon"></i>
+            </div>
+            <div class="user-info">
+              <div class="user-name">
+                <%= user.username %>
+              </div>
+              <div class="user-meta">
+                <% if user.name.present? %>
+                  <span>
+                    <i class="user icon"></i>
+                    <%= user.name %>
+                  </span>
+                <% end %>
+                <span>
+                  <i class="envelope icon"></i>
+                  <%= user.email %>
+                </span>
+                <span>
+                  <i class="users icon"></i>
+                  <%= pluralize(user.community_groups.count, 'grup') %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="no-results">
+          <i class="search icon"></i>
+          <h3>Sonuç Bulunamadı</h3>
+          <p>
+            "<%= params[:q] %>" için herhangi bir sonuç bulunamadı.<br>
+            Lütfen farklı anahtar kelimelerle tekrar deneyin.
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

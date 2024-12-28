@@ -67,6 +67,48 @@ class CommunityGroupsController < ApplicationController
       end
     end
   
+    def edit
+      unless current_user == @community_group.creator
+        flash[:alert] = "Bu işlem için yetkiniz yok."
+        redirect_to @community_group
+      end
+    end
+  
+    def update
+      if current_user == @community_group.creator
+        if @community_group.update(community_group_params)
+          respond_to do |format|
+            format.html { 
+              flash[:notice] = "Grup başarıyla güncellendi."
+              redirect_to @community_group
+            }
+            format.json { 
+              render json: {
+                status: :ok,
+                description: @community_group.description
+              }
+            }
+          end
+        else
+          respond_to do |format|
+            format.html {
+              flash[:alert] = @community_group.errors.full_messages.join(", ")
+              render :edit, status: :unprocessable_entity
+            }
+            format.json {
+              render json: {
+                status: :error,
+                errors: @community_group.errors.full_messages
+              }, status: :unprocessable_entity
+            }
+          end
+        end
+      else
+        flash[:alert] = "Bu işlem için yetkiniz yok."
+        redirect_to @community_group
+      end
+    end
+  
     private
 
     def require_user
