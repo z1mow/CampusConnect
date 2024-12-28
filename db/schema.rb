@@ -44,9 +44,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_203554) do
     t.integer "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "default"
     t.text "description"
     t.string "category"
+    t.boolean "default"
   end
 
   create_table "group_members", force: :cascade do |t|

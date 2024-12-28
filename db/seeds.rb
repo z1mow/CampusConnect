@@ -30,8 +30,8 @@ admin_user = User.create!(
 )
 
 CommunityGroup.create!([
-  { name: "Kadın Hakları Grubu", creator_id: admin_user.id, default: true  },
-  { name: "Hayvan Hakları Grubu", creator_id: admin_user.id, default: true },
-  { name: "İnsan Hakları Grubu", creator_id: admin_user.id, default: true  },
-  { name: "Okul Hakkında Şikayet", creator_id: admin_user.id, default: true  }
+  { name: "Kadın Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
+  { name: "Hayvan Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
+  { name: "İnsan Hakları Grubu", creator_id: admin_user.id, default: true, category: "other", description:"A"},
+  { name: "Okul Hakkında Şikayet", creator_id: admin_user.id, default: true, category: "other", description:"A"}
 ])
