@@ -254,6 +254,20 @@
       margin: 0 !important;
       font-size: 0.85em !important;
     }
+    .member-link {
+      color: #2c3e50;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: block;
+      padding: 2px 5px;
+      margin: -2px -5px;
+      border-radius: 4px;
+    }
+    .member-link:hover {
+      color: #00B5AD;
+      background: rgba(0, 181, 173, 0.05);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -331,7 +345,7 @@
               <i class="user icon"></i>
             </div>
             <div class="member-name">
-              <%= member.username %>
+              <%= link_to member.username, user_path(member), class: "member-link" %>
             </div>
             <% if member == @community_group.creator %>
               <div class="creator-badge">Kurucu</div>

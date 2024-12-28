@@ -1,19 +1,195 @@
-<h1><%= @user.name || @user.username %>'s Profile</h1>
-
-<div class="ui segment">
-  <% if @user.profile_picture.attached? %>
-    <img src="<%= url_for(@user.profile_picture) %>" alt="Profil Fotoğrafı" class="ui small circular image">
-  <% else %>
-    <img src="<%= asset_path('default_profile_picture.png') %>" alt="Varsayılan Profil Fotoğrafı" class="ui small circular image">
-  <% end %>
-  <div class="profile-details">
-    <p><strong>Ad:</strong> <%= @user.name %></p>
-    <p><strong>Kullanıcı Adı:</strong> <%= @user.username %></p>
-    <p><strong>Email:</strong> <%= @user.email %></p>
-    <p><strong>Kayıt Tarihi:</strong> <%= @user.created_at.strftime('%d %B %Y') %></p>
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <% if @user.profile_picture.attached? %>
+        <%= image_tag @user.profile_picture %>
+      <% else %>
+        <i class="huge user circle icon"></i>
+      <% end %>
+    </div>
+    
+    <div class="profile-info">
+      <h1 class="profile-name"><%= @user.name %></h1>
+      <div class="profile-username">@<%= @user.username %></div>
+      <div class="profile-stats">
+        <div class="stat-item">
+          <i class="users icon"></i>
+          <%= pluralize(@community_groups.count, 'Topluluk') %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="profile-actions">
-    <%= link_to "Profil Düzenle", edit_user_path(@user), class: "ui button primary" %>
+  <div class="profile-groups">
+    <h2>
+      <i class="users icon"></i>
+      Üye Olduğu Topluluklar
+    </h2>
+    
+    <div class="groups-grid">
+      <% @community_groups.each do |group| %>
+        <%= link_to community_group_path(group), class: "group-card" do %>
+          <div class="group-name">
+            <i class="users icon"></i>
+            <%= group.name %>
+          </div>
+          <div class="group-meta">
+            <span>
+              <i class="user icon"></i>
+              <%= group.users.count %> üye
+            </span>
+            <% if group.creator == @user %>
+              <span class="creator-badge">Kurucu</span>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
+
+<style>
+.profile-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 1rem;
+}
+
+.profile-header {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  color: #00B5AD;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  color: #2c3e50;
+  font-size: 1.8em;
+  margin-bottom: 0.3rem;
+}
+
+.profile-username {
+  color: #7f8c8d;
+  font-size: 1.1em;
+  margin-bottom: 1rem;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #95a5a6;
+}
+
+.stat-item i {
+  color: #00B5AD;
+}
+
+.profile-groups {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+}
+
+.profile-groups h2 {
+  color: #2c3e50;
+  font-size: 1.5em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-groups h2 i {
+  color: #00B5AD;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.group-card {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.group-card:hover {
+  transform: translateY(-2px);
+  background: #f1f2f3;
+  text-decoration: none;
+  color: inherit;
+}
+
+.group-name {
+  color: #2c3e50;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.group-name i {
+  color: #00B5AD;
+}
+
+.group-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #95a5a6;
+  font-size: 0.9em;
+}
+
+.group-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.creator-badge {
+  background: rgba(0, 181, 173, 0.1);
+  color: #00B5AD;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+</style>
