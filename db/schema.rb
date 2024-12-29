@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_01_040000) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_102128) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,13 +61,58 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_040000) do
     t.index ["user_id"], name: "index_group_members_on_user_id"
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.text "body"
-    t.integer "user_id"
+  create_table "messages", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigserial "id", null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
     t.bigint "community_group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["community_group_id"], name: "index_messages_on_community_group_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "messages_apr_2025_to_may_2025", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigint "id", default: -> { "nextval('messages_id_seq'::regclass)" }, null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.bigint "community_group_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "messages_dec_2024_to_jan_2025", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigint "id", default: -> { "nextval('messages_id_seq'::regclass)" }, null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.bigint "community_group_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "messages_default", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigint "id", default: -> { "nextval('messages_id_seq'::regclass)" }, null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.bigint "community_group_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "messages_feb_2025_to_mar_2025", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigint "id", default: -> { "nextval('messages_id_seq'::regclass)" }, null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.bigint "community_group_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "messages_jun_2025_to_jul_2025", primary_key: ["id", "created_at"], force: :cascade do |t|
+    t.bigint "id", default: -> { "nextval('messages_id_seq'::regclass)" }, null: false
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.bigint "community_group_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,5 +130,4 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_040000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "group_members", "community_groups"
   add_foreign_key "group_members", "users"
-  add_foreign_key "messages", "community_groups"
 end
