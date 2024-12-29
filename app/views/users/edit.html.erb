@@ -11,10 +11,7 @@
     <%= form.text_field :username, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :email, "Email" %>
-    <%= form.email_field :email, class: "form-control" %>
-  </div>
+ 
 
   <div class="form-group">
     <%= form.label :password, "Şifre (Opsiyonel)" %>
@@ -22,10 +19,21 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :profile_picture, "Profil Fotoğrafı" %>
-    <%= form.file_field :profile_picture, class: "form-control" %>
+  <%= form.label :department, "Departman Seçin" %>
+  <%= form.select :department, User::DEPARTMENTS.map { |d| [d.humanize, d] }, { prompt: "Departman Seçin" }, class: "form-control" %>
   </div>
-
+  <div class="form-group">
+  <%= form.label :title, "Title Seçin" %>
+  <%= form.select :title, User::TITLES.map { |t| [t.humanize, t] }, { prompt: "Title Seçin" }, class: "form-control" %>
+  </div>
+  <div class="form-group">
+  <%= form.label :profile_picture, "Profil Fotoğrafı" %>
+  <%= form.file_field :profile_picture, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= form.label :student_class, "Class Seçin" %>
+  <%= form.select :student_class, User::STUDENT_CLASS.map { |d| [d.humanize, d] }, { prompt: "Class Seçin" }, class: "form-control" %>
+</div>
   <div class="form-group">
     <%= form.submit "Kaydet", class: "btn btn-success" %>
   </div>
