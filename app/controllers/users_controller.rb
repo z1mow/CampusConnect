@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_user, only: [:show, :edit, :update, :account]
+  before_action :require_user, only: [:show, :edit, :update, :account, :send_friend_request, :accept_friend_request, :reject_friend_request, :remove_friend]
+  before_action :set_user, only: [:send_friend_request, :accept_friend_request, :reject_friend_request, :remove_friend]
 
   def new
     @user = User.new
@@ -32,6 +33,10 @@ class UsersController < ApplicationController
       end
       Rails.logger.info "Cache HIT - Retrieved profile data for user #{@user.id} from cache" unless @profile_data.nil?
       @community_groups = @user.community_groups.includes(:users)
+      @is_friend = current_user.friends_with?(@user)
+      @can_send_request = current_user.can_send_friend_request?(@user)
+      @pending_request = Friend.find_by(user: current_user, friend: @user, status: 'pending') ||
+                        Friend.find_by(user: @user, friend: current_user, status: 'pending')
     else
       @user = current_user
       cache_key = "user_profile/#{current_user.id}-#{current_user.updated_at.to_i}"
@@ -78,9 +83,79 @@ class UsersController < ApplicationController
     end
   end
 
+  def send_friend_request
+    if current_user.can_send_friend_request?(@user)
+      @friend_request = Friend.new(user: current_user, friend: @user, status: 'pending')
+      
+      if @friend_request.save
+        flash[:notice] = "Arkadaşlık isteği gönderildi"
+      else
+        flash[:error] = "Arkadaşlık isteği gönderilemedi: #{@friend_request.errors.full_messages.join(', ')}"
+      end
+    else
+      flash[:error] = "Arkadaşlık isteği gönderilemez"
+    end
+    
+    redirect_back(fallback_location: root_path)
+  end
+
+  def accept_friend_request
+    @friend_request = Friend.find_by(user: @user, friend: current_user, status: 'pending')
+    
+    if @friend_request
+      if @friend_request.update(status: 'accepted')
+        flash[:notice] = "Arkadaşlık isteği kabul edildi"
+      else
+        flash[:error] = "Arkadaşlık isteği kabul edilemedi"
+      end
+    else
+      flash[:error] = "Arkadaşlık isteği bulunamadı"
+    end
+    
+    redirect_back(fallback_location: root_path)
+  end
+
+  def reject_friend_request
+    @friend_request = Friend.find_by(user: @user, friend: current_user, status: 'pending')
+    
+    if @friend_request
+      if @friend_request.update(status: 'rejected')
+        flash[:notice] = "Arkadaşlık isteği reddedildi"
+      else
+        flash[:error] = "Arkadaşlık isteği reddedilemedi"
+      end
+    else
+      flash[:error] = "Arkadaşlık isteği bulunamadı"
+    end
+    
+    redirect_back(fallback_location: root_path)
+  end
+
+  def remove_friend
+    @friendship = Friend.where(status: 'accepted')
+                       .where('(user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)', 
+                              current_user.id, @user.id, @user.id, current_user.id)
+                       .first
+    
+    if @friendship&.destroy
+      flash[:notice] = "Arkadaşlıktan çıkarıldı"
+    else
+      flash[:error] = "Arkadaşlıktan çıkarılamadı"
+    end
+    
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :username, :email, :password, :password_confirmation, :profile_picture,:department,:title,:student_class )
+  end
+
+  def set_user
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Kullanıcı bulunamadı"
+    redirect_to root_path
   end
 end

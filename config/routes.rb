@@ -32,5 +32,23 @@ Rails.application.routes.draw do
   post 'message', to: 'messages#create'
   get 'logout', to: 'sessions#destroy'
 
+  # User routes with friends
+  resources :users do
+    member do
+      post 'send_friend_request'
+      post 'accept_friend_request'
+      post 'reject_friend_request'
+      delete 'remove_friend'
+    end
+  end
+
+  # Friend routes
+  resources :friends, only: [:index] do
+    collection do
+      get 'pending_requests'
+      get 'my_friends'
+    end
+  end
+
   mount ActionCable.server, at: '/cable'
 end

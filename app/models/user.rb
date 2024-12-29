@@ -41,6 +41,40 @@ class User < ApplicationRecord
     community_groups.include?(group)
   end
 
+  # Friend associations
+  has_many :friend_requests_sent, class_name: 'Friend', foreign_key: 'user_id', dependent: :destroy
+  has_many :friend_requests_received, class_name: 'Friend', foreign_key: 'friend_id', dependent: :destroy
+
+  # Helper methods for friends
+  def friends
+    friend_ids = friend_requests_sent.where(status: 'accepted').pluck(:friend_id) +
+                 friend_requests_received.where(status: 'accepted').pluck(:user_id)
+    User.where(id: friend_ids)
+  end
+
+  def pending_friend_requests
+    friend_requests_received.where(status: 'pending')
+  end
+
+  def friend_request_sent?(user)
+    friend_requests_sent.where(friend_id: user.id).exists?
+  end
+
+  def friends_with?(user)
+    Friend.where(status: 'accepted')
+          .where('(user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)', 
+                 self.id, user.id, user.id, self.id)
+          .exists?
+  end
+
+  def can_send_friend_request?(user)
+    return false if self == user
+    return false if friends_with?(user)
+    return false if friend_request_sent?(user)
+    return false if user.friend_request_sent?(self)
+    true
+  end
+
   private
 
   # Profil fotoğrafı türü kontrolü
