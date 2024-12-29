@@ -70,6 +70,11 @@
       font-size: 0.85em;
       margin-bottom: 1rem;
     }
+    .unread-messages {
+      color: #e74c3c;
+      font-size: 0.85em;
+      font-weight: bold;
+    }
     .group-action {
       margin-top: auto;
     }
@@ -154,6 +159,12 @@
             <i class="user icon"></i>
             <%= pluralize(group.users.count, 'üye') %>
           </div>
+          <% if defined?(group.unread_messages_count) && group.unread_messages_count(current_user).positive? %>
+            <div class="unread-messages">
+              <i class="envelope icon"></i>
+              <%= group.unread_messages_count(current_user) %> okunmamış mesaj
+            </div>
+          <% end %>
           <div class="group-action">
             <% if current_user.member_of?(group) %>
               <%= link_to community_group_path(group), class: "ui button chatroom-button" do %>
