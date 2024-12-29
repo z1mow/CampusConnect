@@ -1,40 +1,185 @@
-<h1>Profil Düzenle</h1>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <style>
+    .edit-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 1rem;
+    }
+    .edit-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.07);
+    }
+    .edit-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .edit-title {
+      color: #2c3e50;
+      font-size: 1.8em;
+      margin: 0;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-label {
+      display: block;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: #00B5AD;
+      box-shadow: 0 0 0 2px rgba(0, 181, 173, 0.2);
+      outline: none;
+    }
+    .form-control:disabled {
+      background-color: #f8f9fa;
+      cursor: not-allowed;
+      color: #6c757d;
+      border: 1px solid #e9ecef;
+    }
+    .form-control-static {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      color: #6c757d;
+      cursor: not-allowed;
+    }
+    .form-select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+    .form-select:focus {
+      border-color: #00B5AD;
+      box-shadow: 0 0 0 2px rgba(0, 181, 173, 0.2);
+      outline: none;
+    }
+    .submit-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      padding: 0.8rem 1.5rem !important;
+      border-radius: 8px !important;
+      border: none;
+      width: 100%;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease !important;
+    }
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
+    }
+    .form-hint {
+      font-size: 0.85em;
+      color: #7f8c8d;
+      margin-top: 0.3rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .readonly-field {
+      position: relative;
+    }
+    .readonly-field::after {
+      content: "Değiştirilemez";
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75em;
+      color: #6c757d;
+      background-color: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="edit-container">
+    <div class="edit-card">
+      <div class="edit-header">
+        <h1 class="edit-title">Profil Düzenle</h1>
+      </div>
 
-<%= form_with(model: @user, url: user_path(@user), method: :patch, local: true, multipart: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :name, "Ad" %>
-    <%= form.text_field :name, class: "form-control" %>
-  </div>
+      <%= form_with(model: @user, url: user_path(@user), method: :patch, local: true, multipart: true) do |form| %>
+        <div class="form-row">
+          <div class="form-group">
+            <%= form.label :name, "Ad", class: "form-label" %>
+            <div class="readonly-field">
+              <%= form.text_field :name, class: "form-control", readonly: true, disabled: true %>
+            </div>
+          </div>
 
-  <div class="form-group">
-    <%= form.label :username, "Kullanıcı Adı" %>
-    <%= form.text_field :username, class: "form-control" %>
-  </div>
+          <div class="form-group">
+            <%= form.label :username, "Kullanıcı Adı", class: "form-label" %>
+            <div class="readonly-field">
+              <%= form.text_field :username, class: "form-control", readonly: true, disabled: true %>
+            </div>
+          </div>
+        </div>
 
- 
+        <div class="form-group">
+          <%= form.label :password, "Şifre", class: "form-label" %>
+          <%= form.password_field :password, class: "form-control" %>
+          <div class="form-hint">Değiştirmek istemiyorsanız boş bırakın</div>
+        </div>
 
-  <div class="form-group">
-    <%= form.label :password, "Şifre (Opsiyonel)" %>
-    <%= form.password_field :password, class: "form-control" %>
-  </div>
+        <div class="form-row">
+          <div class="form-group">
+            <%= form.label :department, "Departman", class: "form-label" %>
+            <%= form.select :department, 
+                User::DEPARTMENTS.map { |d| [d.humanize, d] }, 
+                { prompt: "Departman Seçin" }, 
+                class: "form-select" %>
+          </div>
 
-  <div class="form-group">
-  <%= form.label :department, "Departman Seçin" %>
-  <%= form.select :department, User::DEPARTMENTS.map { |d| [d.humanize, d] }, { prompt: "Departman Seçin" }, class: "form-control" %>
+          <div class="form-group">
+            <%= form.label :title, "Title", class: "form-label" %>
+            <%= form.select :title, 
+                User::TITLES.map { |t| [t.humanize, t] }, 
+                { prompt: "Title Seçin" }, 
+                class: "form-select" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :student_class, "Sınıf", class: "form-label" %>
+          <%= form.select :student_class, 
+              User::STUDENT_CLASS.map { |d| [d.humanize, d] }, 
+              { prompt: "Sınıf Seçin" }, 
+              class: "form-select" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :profile_picture, "Profil Fotoğrafı", class: "form-label" %>
+          <%= form.file_field :profile_picture, class: "form-control" %>
+          <div class="form-hint">Desteklenen formatlar: PNG, JPG, JPEG</div>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit "Kaydet", class: "submit-button" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <div class="form-group">
-  <%= form.label :title, "Title Seçin" %>
-  <%= form.select :title, User::TITLES.map { |t| [t.humanize, t] }, { prompt: "Title Seçin" }, class: "form-control" %>
-  </div>
-  <div class="form-group">
-  <%= form.label :profile_picture, "Profil Fotoğrafı" %>
-  <%= form.file_field :profile_picture, class: "form-control" %>
-</div>
-<div class="form-group">
-  <%= form.label :student_class, "Class Seçin" %>
-  <%= form.select :student_class, User::STUDENT_CLASS.map { |d| [d.humanize, d] }, { prompt: "Class Seçin" }, class: "form-control" %>
-</div>
-  <div class="form-group">
-    <%= form.submit "Kaydet", class: "btn btn-success" %>
-  </div>
-<% end %>
+</body>
+</html>

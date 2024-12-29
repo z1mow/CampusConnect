@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @user = current_user
     if @user.update(user_params)
       flash[:notice] = "Profil başarıyla güncellendi."
-      redirect_to profile_path
+      redirect_to user_path(@user)
     else
       flash.now[:error] = "Profil güncellenirken bir hata oluştu."
       render :edit, status: :unprocessable_entity

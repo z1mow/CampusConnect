@@ -33,9 +33,6 @@ class User < ApplicationRecord
   validate :email_domain_validation
   validate :profile_picture_content_type
 
-  # Yeni kullanıcı oluşturulduğunda varsayılan değerler
-  after_initialize :set_default_department_and_title, if: :new_record?
-
   # Kullanıcı belirli bir grubun üyesi mi kontrolü
   def member_of?(group)
     community_groups.include?(group)
@@ -67,12 +64,5 @@ class User < ApplicationRecord
     unless allowed_domains.any? { |domain| email.end_with?(domain) }
       errors.add(:email, 'must be from an allowed domain (e.g., @live.acibadem.edu.tr, @acibadem.edu.tr)')
     end
-  end
-
-  before_validation :set_default_department_and_title, on: :create
-
-  def set_default_department_and_title
-    self.department ||= "Computer_Science"
-    self.title ||= "Student"
   end
 end

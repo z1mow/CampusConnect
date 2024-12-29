@@ -11,6 +11,36 @@
     <div class="profile-info">
       <h1 class="profile-name"><%= @user.name %></h1>
       <div class="profile-username">@<%= @user.username %></div>
+      
+      <div class="profile-details">
+        <% if @user.department.present? %>
+          <div class="detail-item">
+            <i class="building icon"></i>
+            <%= @user.department.humanize %>
+          </div>
+        <% end %>
+        
+        <% if @user.title.present? %>
+          <div class="detail-item">
+            <i class="id badge icon"></i>
+            <%= @user.title.humanize %>
+          </div>
+        <% end %>
+        
+        <% if @user.student_class.present? %>
+          <div class="detail-item">
+            <i class="graduation cap icon"></i>
+            <%= @user.student_class %> Sınıf
+          </div>
+        <% end %>
+      </div>
+
+      <% if @user == current_user %>
+        <%= link_to edit_user_path(@user), class: "edit-profile-btn" do %>
+          <i class="edit icon"></i>
+          Profili Düzenle
+        <% end %>
+      <% end %>
       <div class="profile-stats">
         <div class="stat-item">
           <i class="users icon"></i>
@@ -190,5 +220,46 @@
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8em;
+}
+
+.edit-profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #00B5AD;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: background 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background: #009c94;
+  color: white;
+  text-decoration: none;
+}
+
+.profile-details {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #636e72;
+  font-size: 0.95em;
+  background: rgba(0, 181, 173, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.detail-item i {
+  color: #00B5AD;
 }
 </style>
