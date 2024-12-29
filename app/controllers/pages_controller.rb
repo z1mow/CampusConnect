@@ -1,6 +1,9 @@
 class PagesController < ApplicationController
-  before_action :require_user
-    def home
-      @default_groups = CommunityGroup.where(default: true)
+  def home
+    if current_user
+      @default_groups = CommunityGroup.where(default: true).order(:id).limit(4)
+    else
+      redirect_to login_path
     end
+  end
 end 

@@ -15,9 +15,14 @@
       <% if @user != current_user %>
         <div class="friend-actions">
           <% if @is_friend %>
-            <%= button_to remove_friend_user_path(@user), method: :delete, class: "ui red button", data: { confirm: "Arkadaşlıktan çıkarmak istediğinize emin misiniz?" } do %>
-              <i class="user times icon"></i> Arkadaşlıktan Çıkar
-            <% end %>
+            <div class="ui buttons">
+              <%= button_to remove_friend_user_path(@user), method: :delete, class: "ui red button", data: { confirm: "Arkadaşlıktan çıkarmak istediğinize emin misiniz?" } do %>
+                <i class="user times icon"></i> Arkadaşlıktan Çıkar
+              <% end %>
+              <%= link_to chat_user_path(@user), class: "ui primary button" do %>
+                <i class="comment icon"></i> Mesaj Gönder
+              <% end %>
+            </div>
           <% elsif @pending_request %>
             <% if @pending_request.friend_id == current_user.id %>
               <div class="ui buttons">

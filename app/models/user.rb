@@ -45,6 +45,10 @@ class User < ApplicationRecord
   has_many :friend_requests_sent, class_name: 'Friend', foreign_key: 'user_id', dependent: :destroy
   has_many :friend_requests_received, class_name: 'Friend', foreign_key: 'friend_id', dependent: :destroy
 
+  # Private Message associations
+  has_many :sent_private_messages, class_name: 'PrivateMessage', foreign_key: 'sender_id', dependent: :destroy
+  has_many :received_private_messages, class_name: 'PrivateMessage', foreign_key: 'receiver_id', dependent: :destroy
+
   # Helper methods for friends
   def friends
     friend_ids = friend_requests_sent.where(status: 'accepted').pluck(:friend_id) +
@@ -73,6 +77,11 @@ class User < ApplicationRecord
     return false if friend_request_sent?(user)
     return false if user.friend_request_sent?(self)
     true
+  end
+
+  # Helper method for private messages
+  def private_messages_with(other_user)
+    PrivateMessage.between_users(self, other_user)
   end
 
   private

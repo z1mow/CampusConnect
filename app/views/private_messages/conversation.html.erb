@@ -1,0 +1,41 @@
+<div class="ui container">
+  <div class="ui segment">
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <h2 class="ui header">
+          <% if @receiver.profile_picture.attached? %>
+            <%= image_tag @receiver.profile_picture, class: "ui avatar image" %>
+          <% else %>
+            <i class="user circle icon"></i>
+          <% end %>
+          <div class="content">
+            <%= @receiver.name %>
+            <div class="sub header">@<%= @receiver.username %></div>
+          </div>
+        </h2>
+      </div>
+    </div>
+
+    <div id="messages" class="ui segment" style="height: 400px; overflow-y: auto;">
+      <%= render partial: 'private_messages/message', collection: @messages %>
+    </div>
+
+    <div class="ui form">
+      <%= form_with(model: @new_message, local: true, url: private_messages_path(user_id: @receiver.id)) do |f| %>
+        <div class="field">
+          <%= f.text_area :content, rows: 2, placeholder: "Mesajınızı yazın...", required: true %>
+          <%= f.hidden_field :receiver_id, value: @receiver.id %>
+          <%= hidden_field_tag :user_id, @receiver.id %>
+        </div>
+        <%= f.submit "Gönder", class: "ui primary button", data: { disable_with: "Gönderiliyor..." } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const messagesContainer = document.getElementById('messages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  });
+</script> 

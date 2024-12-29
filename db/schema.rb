@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_29_130901) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_133815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_130901) do
     t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "direct_messages", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_direct_messages_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_direct_messages_on_sender_id_and_receiver_id"
+    t.index ["sender_id"], name: "index_direct_messages_on_sender_id"
   end
 
   create_table "friends", force: :cascade do |t|
@@ -97,6 +108,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_130901) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
+  create_table "private_messages", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_private_messages_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_private_messages_on_sender_id_and_receiver_id"
+    t.index ["sender_id"], name: "index_private_messages_on_sender_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "name"
@@ -113,9 +135,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_130901) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "direct_messages", "users", column: "receiver_id"
+  add_foreign_key "direct_messages", "users", column: "sender_id"
   add_foreign_key "friends", "users"
   add_foreign_key "friends", "users", column: "friend_id"
   add_foreign_key "group_members", "community_groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "messages", "community_groups"
+  add_foreign_key "private_messages", "users", column: "receiver_id"
+  add_foreign_key "private_messages", "users", column: "sender_id"
 end

@@ -18,8 +18,15 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id].present?
-      @user = User.find(params[:id])
+    @user = if params[:id] == "search"
+      nil
+    elsif params[:id].present?
+      User.find(params[:id])
+    else
+      current_user
+    end
+
+    if @user
       cache_key = "user_profile/#{@user.id}-#{@user.updated_at.to_i}"
       Rails.logger.info "Attempting to fetch profile data for user #{@user.id} from cache"
       
@@ -31,27 +38,16 @@ class UsersController < ApplicationController
           profile_picture_attached: @user.profile_picture.attached?
         }
       end
-      Rails.logger.info "Cache HIT - Retrieved profile data for user #{@user.id} from cache" unless @profile_data.nil?
-      @community_groups = @user.community_groups.includes(:users)
-      @is_friend = current_user.friends_with?(@user)
-      @can_send_request = current_user.can_send_friend_request?(@user)
-      @pending_request = Friend.find_by(user: current_user, friend: @user, status: 'pending') ||
-                        Friend.find_by(user: @user, friend: current_user, status: 'pending')
-    else
-      @user = current_user
-      cache_key = "user_profile/#{current_user.id}-#{current_user.updated_at.to_i}"
-      Rails.logger.info "Attempting to fetch profile data for current_user #{current_user.id} from cache"
       
-      @profile_data = Rails.cache.fetch(cache_key) do
-        Rails.logger.info "Cache MISS for current_user #{current_user.id} - generating profile data"
-        {
-          name: current_user.name,
-          username: current_user.username,
-          profile_picture_attached: current_user.profile_picture.attached?
-        }
+      @community_groups = @user.community_groups.includes(:users)
+      if @user != current_user
+        @is_friend = current_user.friends_with?(@user)
+        @can_send_request = current_user.can_send_friend_request?(@user)
+        @pending_request = Friend.find_by(user: current_user, friend: @user, status: 'pending') ||
+                          Friend.find_by(user: @user, friend: current_user, status: 'pending')
       end
-      Rails.logger.info "Cache HIT - Retrieved profile data for current_user #{current_user.id} from cache" unless @profile_data.nil?
-      @community_groups = current_user.community_groups.includes(:users)
+    else
+      redirect_to search_users_path(q: params[:q])
     end
   end
 
@@ -76,10 +72,21 @@ class UsersController < ApplicationController
   end
 
   def search
-    if params[:query].present?
-      @users = User.where("name LIKE ?", "%#{params[:query]}%")
+    Rails.logger.info "Search params: #{params.inspect}"
+    
+    if params[:q].present?
+      search_term = "%#{params[:q].strip}%"
+      @users = User.where("username ILIKE ? OR name ILIKE ? OR email ILIKE ?", 
+                         search_term, search_term, search_term)
+      Rails.logger.info "Found #{@users.count} users matching '#{params[:q]}'"
     else
       @users = []
+      Rails.logger.info "No search term provided"
+    end
+
+    respond_to do |format|
+      format.html { render 'search' }
+      format.json { render json: @users }
     end
   end
 
@@ -144,6 +151,24 @@ class UsersController < ApplicationController
     end
     
     redirect_back(fallback_location: root_path)
+  end
+
+  def chat
+    @user = User.find(params[:id])
+    Rails.logger.info "Chat action: User found - #{@user.id}"
+    
+    if current_user.friends_with?(@user)
+      Rails.logger.info "Chat action: Users are friends, redirecting to conversation"
+      redirect_to conversation_private_messages_path(user_id: @user.id)
+    else
+      Rails.logger.info "Chat action: Users are not friends"
+      flash[:error] = "Sadece arkadaşlarınızla mesajlaşabilirsiniz"
+      redirect_to @user
+    end
+  rescue => e
+    Rails.logger.error "Chat action error: #{e.message}"
+    flash[:error] = "Bir hata oluştu"
+    redirect_to root_path
   end
 
   private
