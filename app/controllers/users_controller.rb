@@ -19,9 +19,34 @@ class UsersController < ApplicationController
   def show
     if params[:id].present?
       @user = User.find(params[:id])
-      @community_groups = @user.community_groups
+      cache_key = "user_profile/#{@user.id}-#{@user.updated_at.to_i}"
+      Rails.logger.info "Attempting to fetch profile data for user #{@user.id} from cache"
+      
+      @profile_data = Rails.cache.fetch(cache_key) do
+        Rails.logger.info "Cache MISS for user #{@user.id} - generating profile data"
+        {
+          name: @user.name,
+          username: @user.username,
+          profile_picture_attached: @user.profile_picture.attached?
+        }
+      end
+      Rails.logger.info "Cache HIT - Retrieved profile data for user #{@user.id} from cache" unless @profile_data.nil?
+      @community_groups = @user.community_groups.includes(:users)
     else
       @user = current_user
+      cache_key = "user_profile/#{current_user.id}-#{current_user.updated_at.to_i}"
+      Rails.logger.info "Attempting to fetch profile data for current_user #{current_user.id} from cache"
+      
+      @profile_data = Rails.cache.fetch(cache_key) do
+        Rails.logger.info "Cache MISS for current_user #{current_user.id} - generating profile data"
+        {
+          name: current_user.name,
+          username: current_user.username,
+          profile_picture_attached: current_user.profile_picture.attached?
+        }
+      end
+      Rails.logger.info "Cache HIT - Retrieved profile data for current_user #{current_user.id} from cache" unless @profile_data.nil?
+      @community_groups = current_user.community_groups.includes(:users)
     end
   end
 

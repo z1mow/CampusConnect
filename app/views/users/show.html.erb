@@ -1,7 +1,7 @@
 <div class="profile-container">
   <div class="profile-header">
     <div class="profile-avatar">
-      <% if @user.profile_picture.attached? %>
+      <% if @profile_data[:profile_picture_attached] %>
         <%= image_tag @user.profile_picture %>
       <% else %>
         <i class="huge user circle icon"></i>
@@ -9,8 +9,8 @@
     </div>
     
     <div class="profile-info">
-      <h1 class="profile-name"><%= @user.name %></h1>
-      <div class="profile-username">@<%= @user.username %></div>
+      <h1 class="profile-name"><%= @profile_data[:name] %></h1>
+      <div class="profile-username">@<%= @profile_data[:username] %></div>
       <div class="profile-stats">
         <div class="stat-item">
           <i class="users icon"></i>
@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+  </div>
 
   <div class="profile-groups">
     <h2>
