@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%= csrf_meta_tags %>
   <style>
     .group-container {
       max-width: 800px;
@@ -35,6 +36,9 @@
       font-size: 1em;
       line-height: 1.6;
       margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .group-stats {
       display: flex;
@@ -53,6 +57,10 @@
     .action-buttons {
       display: flex;
       gap: 1rem;
+      margin-top: 2rem;
+    }
+    .action-buttons > * {
+      flex: 1;
     }
     .chat-button {
       background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
@@ -108,6 +116,8 @@
       background: #f8f9fa;
       border-radius: 8px;
       transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
     .member-item:hover {
       transform: translateY(-2px);
@@ -121,13 +131,37 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
     }
     .member-avatar i {
       color: white;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
     }
     .member-name {
       color: #2c3e50;
       font-weight: 500;
+      margin-right: auto;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .member-name:hover {
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+      background: #f8f9fa;
+      padding: 2px 5px;
+      margin: -2px -5px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .creator-badge {
       background: rgba(0, 181, 173, 0.1);
@@ -137,7 +171,235 @@
       font-size: 0.8em;
       margin-left: auto;
     }
+    .leave-button {
+      background: white !important;
+      color: #e74c3c !important;
+      border: 1px solid #e74c3c !important;
+      padding: 1rem 2rem !important;
+      border-radius: 8px !important;
+      transition: all 0.3s ease !important;
+    }
+    .leave-button:hover {
+      background: #e74c3c !important;
+      color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    }
+    .join-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      border: none !important;
+      padding: 1rem 2rem !important;
+      border-radius: 8px !important;
+      font-size: 1.1em !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.5px !important;
+      transition: all 0.3s ease !important;
+      width: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.8rem !important;
+      box-shadow: 0 4px 15px rgba(0, 181, 173, 0.2) !important;
+    }
+    .join-button:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(0, 181, 173, 0.3) !important;
+      background: linear-gradient(135deg, #00c4bb 0%, #00a8a0 100%) !important;
+    }
+    .join-button:active {
+      transform: translateY(0) !important;
+      box-shadow: 0 2px 10px rgba(0, 181, 173, 0.2) !important;
+    }
+    .join-button i {
+      font-size: 1.2em !important;
+      margin-right: 0.2rem !important;
+    }
+    .delete-button {
+      background: white !important;
+      color: #e74c3c !important;
+      border: 1px solid #e74c3c !important;
+      padding: 1rem 2rem !important;
+      border-radius: 8px !important;
+      transition: all 0.3s ease !important;
+      margin-right: 1rem !important;
+    }
+    .delete-button:hover {
+      background: #e74c3c !important;
+      color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    }
+    .remove-member {
+      margin-left: 1rem !important;
+      padding: 0.35rem 0.5rem !important;
+      font-size: 0.7em !important;
+      background: white !important;
+      color: #e74c3c !important;
+      border: 1px solid #e74c3c !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.2rem !important;
+      transition: all 0.2s ease !important;
+      border-radius: 6px !important;
+      min-width: auto !important;
+      white-space: nowrap !important;
+      position: absolute !important;
+      right: 0.8rem !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 2 !important;
+    }
+    .remove-member:hover {
+      background: #e74c3c !important;
+      color: white !important;
+      transform: translateY(-50%) scale(1.02) !important;
+    }
+    .remove-member .icon {
+      margin: 0 !important;
+      font-size: 0.85em !important;
+    }
+    .member-link {
+      color: #2c3e50;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: block;
+      padding: 2px 5px;
+      margin: -2px -5px;
+      border-radius: 4px;
+    }
+    .member-link:hover {
+      color: #00B5AD;
+      background: rgba(0, 181, 173, 0.05);
+      text-decoration: none;
+    }
+    .edit-description-icon {
+      color: #95a5a6;
+      cursor: pointer;
+      padding: 0.2rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-size: 0.9em;
+      opacity: 0.7;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      margin-top: 1px;
+    }
+    .edit-description-icon i {
+      margin: 0;
+      line-height: 1;
+    }
+    .edit-description-icon:hover {
+      color: #f39c12;
+      background: rgba(243, 156, 18, 0.1);
+      opacity: 1;
+    }
+    .description-edit-form {
+      display: none;
+      width: 100%;
+    }
+    .description-edit-form.active {
+      display: block;
+    }
+    .description-edit-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1em;
+      line-height: 1.6;
+      color: #34495e;
+      resize: vertical;
+    }
+    .description-edit-form .buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .description-edit-form .save-button {
+      background: #00B5AD !important;
+      color: white !important;
+      border: none !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 6px !important;
+      cursor: pointer;
+    }
+    .description-edit-form .cancel-button {
+      background: white !important;
+      color: #95a5a6 !important;
+      border: 1px solid #95a5a6 !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 6px !important;
+      cursor: pointer;
+    }
   </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const descriptionText = document.querySelector('.description-text');
+      const editForm = document.querySelector('.description-edit-form');
+      const editIcon = document.querySelector('.edit-description-icon');
+      const textarea = document.querySelector('.description-edit-form textarea');
+      const cancelButton = document.querySelector('.description-edit-form .cancel-button');
+      const form = document.querySelector('.description-edit-form');
+
+      if (editIcon) {
+        editIcon.addEventListener('click', function(e) {
+          e.preventDefault();
+          descriptionText.style.display = 'none';
+          editForm.classList.add('active');
+          textarea.focus();
+        });
+      }
+
+      if (cancelButton) {
+        cancelButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          descriptionText.style.display = 'block';
+          editForm.classList.remove('active');
+        });
+      }
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const url = form.getAttribute('action');
+
+          fetch(url, {
+            method: 'PATCH',
+            body: formData,
+            headers: {
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+              'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === 'ok') {
+              descriptionText.querySelector('span').textContent = data.description;
+              descriptionText.style.display = 'block';
+              editForm.classList.remove('active');
+            } else {
+              alert(data.errors.join('\n'));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+          });
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <div class="group-container">
@@ -160,15 +422,55 @@
 
       <% if @community_group.description.present? %>
         <div class="group-description">
-          <%= @community_group.description %>
+          <div class="description-text">
+            <span><%= @community_group.description %></span>
+            <% if current_user == @community_group.creator %>
+              <%= link_to "#", class: "edit-description-icon" do %>
+                <i class="edit icon"></i>
+              <% end %>
+            <% end %>
+          </div>
+          <% if current_user == @community_group.creator %>
+            <%= form_for @community_group, html: { class: "description-edit-form" }, remote: true do |f| %>
+              <%= f.text_area :description, rows: 3 %>
+              <div class="buttons">
+                <%= f.submit "Kaydet", class: "save-button" %>
+                <button type="button" class="cancel-button">İptal</button>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       <% end %>
 
       <div class="action-buttons">
         <% if current_user.member_of?(@community_group) %>
+          <% if current_user == @community_group.creator %>
+            <%= button_to community_group_path(@community_group), 
+                method: :delete,
+                class: "ui button delete-button",
+                data: { confirm: "Bu grubu silmek istediğinize emin misiniz? Bu işlem geri alınamaz ve tüm üyeler gruptan çıkarılacaktır." } do %>
+              <i class="trash icon"></i>
+              Grubu Sil
+            <% end %>
+          <% elsif current_user != @community_group.creator %>
+            <%= button_to leave_community_group_path(@community_group), 
+                method: :delete,
+                class: "ui button leave-button",
+                data: { confirm: "Bu gruptan ayrılmak istediğinize emin misiniz?" } do %>
+              <i class="sign-out icon"></i>
+              Gruptan Ayrıl
+            <% end %>
+          <% end %>
           <%= link_to community_group_chatroom_path(@community_group), class: "ui button chat-button" do %>
             <i class="comments icon"></i>
             Sohbete Katıl
+          <% end %>
+        <% else %>
+          <%= button_to join_community_group_path(@community_group), 
+              method: :post, 
+              class: "ui button join-button" do %>
+            <i class="plus circle icon"></i>
+            Gruba Katıl
           <% end %>
         <% end %>
         <%= link_to community_groups_path, class: "ui button back-button" do %>
@@ -190,10 +492,18 @@
               <i class="user icon"></i>
             </div>
             <div class="member-name">
-              <%= member.username %>
+              <%= link_to member.username, user_path(member), class: "member-link" %>
             </div>
             <% if member == @community_group.creator %>
               <div class="creator-badge">Kurucu</div>
+            <% elsif current_user == @community_group.creator && member != current_user %>
+              <%= button_to community_group_group_member_path(@community_group, member), 
+                  method: :delete,
+                  class: "ui mini red button remove-member",
+                  data: { confirm: "#{member.username} kullanıcısını gruptan çıkarmak istediğinize emin misiniz?" } do %>
+                <i class="times icon"></i>
+                Gruptan Çıkar
+              <% end %>
             <% end %>
           </div>
         <% end %>

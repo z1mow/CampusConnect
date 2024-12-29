@@ -59,10 +59,12 @@
           <i class="graduation cap icon"></i>
           CampusConnect
         <% end %>
-        <%= link_to chatroom_path, class: "item" do %>
-          <i class="comments icon"></i>
-          Chatroom
+        <div class="ui container">
+        <%= link_to community_groups_path, class: "item" do %>
+          <i class="users icon"></i>
+          Topluluk Grupları
         <% end %>
+        </div>
         <% if logged_in? %>
         <div class="item">
           <%= form_with url: user_search_path, method: :get, local: true, class: "ui action input" do %>
@@ -75,17 +77,20 @@
         <% end %>
         <div class="right menu">
           <% if logged_in? %>
-            <div class="item">
-              <%= link_to account_path, class: "ui dropdown" do %>
-                <i class="user circle icon"></i>
-                Account
-              <% end %>
-            </div>
-            <div class="item">
-              <%= link_to logout_path, class: "ui button" do %>
-                <i class="sign out icon"></i>
-                Logout
-              <% end %>
+            <div class="ui dropdown item">
+              <i class="user circle icon"></i>
+              Account <i class="dropdown icon"></i>
+              <div class="menu">
+                <%= link_to user_path(current_user), class: "item" do %>
+                  <i class="user icon"></i>
+                  Profilim
+                <% end %>
+                <div class="divider"></div>
+                <%= link_to logout_path, class: "item" do %>
+                  <i class="sign out icon"></i>
+                  Çıkış Yap
+                <% end %>
+              </div>
             </div>
           <% else %>
             <% unless current_page?(login_path) %>

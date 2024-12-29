@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user, only: [:show, :edit, :update]
+  before_action :require_user, only: [:show, :edit, :update, :account]
 
   def new
     @user = User.new
@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   def show
     if params[:id].present?
       @user = User.find(params[:id])
+      @community_groups = @user.community_groups
     else
       @user = current_user
     end
@@ -38,6 +39,10 @@ class UsersController < ApplicationController
       flash.now[:error] = "Profil güncellenirken bir hata oluştu."
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def account
+    @user = current_user
   end
 
   def search
