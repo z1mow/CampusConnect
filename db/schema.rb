@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_28_122107) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_133815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,28 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_122107) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "direct_messages", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_direct_messages_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_direct_messages_on_sender_id_and_receiver_id"
+    t.index ["sender_id"], name: "index_direct_messages_on_sender_id"
+  end
+
+  create_table "friends", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "friend_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friends_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_friends_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_friends_on_user_id"
+  end
+
   create_table "group_members", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "community_group_id", null: false
@@ -70,6 +92,33 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_122107) do
     t.index ["community_group_id"], name: "index_messages_on_community_group_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "recipient_type", null: false
+    t.bigint "recipient_id", null: false
+    t.string "actor_type", null: false
+    t.bigint "actor_id", null: false
+    t.string "action"
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_type", "actor_id"], name: "index_notifications_on_actor"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
+  end
+
+  create_table "private_messages", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_private_messages_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_private_messages_on_sender_id_and_receiver_id"
+    t.index ["sender_id"], name: "index_private_messages_on_sender_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "name"
@@ -86,7 +135,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_122107) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "direct_messages", "users", column: "receiver_id"
+  add_foreign_key "direct_messages", "users", column: "sender_id"
+  add_foreign_key "friends", "users"
+  add_foreign_key "friends", "users", column: "friend_id"
   add_foreign_key "group_members", "community_groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "messages", "community_groups"
+  add_foreign_key "private_messages", "users", column: "receiver_id"
+  add_foreign_key "private_messages", "users", column: "sender_id"
 end

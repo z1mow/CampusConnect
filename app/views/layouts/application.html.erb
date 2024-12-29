@@ -67,8 +67,8 @@
         </div>
         <% if logged_in? %>
         <div class="item">
-          <%= form_with url: user_search_path, method: :get, local: true, class: "ui action input" do %>
-            <%= text_field_tag :query, params[:query], placeholder: "Kullanıcı Ara", class: "prompt" %>
+          <%= form_tag search_users_path, method: :get, class: "ui action input" do %>
+            <%= text_field_tag :q, params[:q], placeholder: "Kullanıcı Ara...", class: "prompt" %>
             <button type="submit" class="ui teal button">
               <i class="search icon"></i>
             </button>

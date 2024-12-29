@@ -1,0 +1,13 @@
+<div class="ui comment <%= message.sender == current_user ? 'right aligned' : '' %>" style="margin: 1em 0;">
+  <div class="content">
+    <% unless message.sender == current_user %>
+      <a class="author"><%= message.sender.name %></a>
+    <% end %>
+    <div class="metadata">
+      <span class="date"><%= time_ago_in_words(message.created_at) %> önce</span>
+    </div>
+    <div class="text">
+      <%= message.content %>
+    </div>
+  </div>
+</div> 

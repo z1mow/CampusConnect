@@ -1,0 +1,5 @@
+var messagesContainer = document.getElementById('messages');
+messagesContainer.insertAdjacentHTML('beforeend', '<%= j render partial: "private_messages/message", locals: { message: @message } %>');
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+document.querySelector('#private_message_content').value = ''; 

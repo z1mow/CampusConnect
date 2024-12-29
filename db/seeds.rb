@@ -21,17 +21,36 @@
 #  else
 #    puts "Bu script sadece test veya development ortamında çalıştırılabilir."
 #  end
-admin_user = User.create!(
-  name: "admin",
-  username: "admin",
-  email: "admin@acibadem.edu.tr",
-  password: "password",
-  password_confirmation: "password"
+admin = User.create!(
+  name: 'Admin User',
+  username: 'admin',
+  email: 'admin@live.acibadem.edu.tr',
+  password: '123456',
+  password_confirmation: '123456',
+  department: 'Computer_Science',
+  title: 'Student'
+)
+
+test_user = User.create!(
+  name: 'Test User',
+  username: 'test',
+  email: 'test@live.acibadem.edu.tr',
+  password: '123456',
+  password_confirmation: '123456',
+  department: 'Computer_Science',
+  title: 'Student'
+)
+
+# Test arkadaşlık ilişkisi oluştur
+Friend.create!(
+  user: admin,
+  friend: test_user,
+  status: 'accepted'
 )
 
 CommunityGroup.create!([
-  { name: "Kadın Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
-  { name: "Hayvan Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
-  { name: "İnsan Hakları Grubu", creator_id: admin_user.id, default: true, category: "other", description:"A"},
-  { name: "Okul Hakkında Şikayet", creator_id: admin_user.id, default: true, category: "other", description:"A"}
+  { name: "Kadın Hakları Grubu", creator_id: admin.id, default: true, category:"other", description:"A"},
+  { name: "Hayvan Hakları Grubu", creator_id: admin.id, default: true, category:"other", description:"A"},
+  { name: "İnsan Hakları Grubu", creator_id: admin.id, default: true, category: "other", description:"A"},
+  { name: "Okul Hakkında Şikayet", creator_id: admin.id, default: true, category: "other", description:"A"}
 ])
