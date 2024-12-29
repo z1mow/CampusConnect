@@ -13,7 +13,7 @@ RSpec.describe CommunityGroup, type: :model do
 
     let(:other_user) do
       User.create!(
-        name: 'John Doe',
+        name:,
         username: 'johndoe', # Add valid username
         email: 'john@live.acibadem.edu.tr', # Valid domain
         password: 'password'
