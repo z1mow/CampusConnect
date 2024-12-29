@@ -30,8 +30,32 @@ admin_user = User.create!(
 )
 
 CommunityGroup.create!([
-  { name: "Kadın Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
-  { name: "Hayvan Hakları Grubu", creator_id: admin_user.id, default: true, category:"other", description:"A"},
-  { name: "İnsan Hakları Grubu", creator_id: admin_user.id, default: true, category: "other", description:"A"},
-  { name: "Okul Hakkında Şikayet", creator_id: admin_user.id, default: true, category: "other", description:"A"}
+  { 
+    name: "Kadın Hakları Grubu", 
+    creator_id: admin_user.id, 
+    default: true, 
+    category: "other", 
+    description: "Üniversite kampüsünde kadın haklarını savunan, farkındalık oluşturan ve dayanışmayı güçlendiren bir topluluk. Birlikte daha güçlüyüz!"
+  },
+  { 
+    name: "Hayvan Hakları Grubu", 
+    creator_id: admin_user.id, 
+    default: true, 
+    category: "other", 
+    description: "Kampüsteki dostlarımızın sesi olmak, onları korumak ve yaşam haklarını savunmak için bir araya gelen gönüllüler topluluğu."
+  },
+  { 
+    name: "İnsan Hakları Grubu", 
+    creator_id: admin_user.id, 
+    default: true, 
+    category: "other", 
+    description: "Temel insan haklarını savunan, ayrımcılıkla mücadele eden ve eşit bir dünya için çalışan öğrenci topluluğu."
+  },
+  { 
+    name: "Okul Hakkında Şikayet", 
+    creator_id: admin_user.id, 
+    default: true, 
+    category: "other", 
+    description: "Öğrencilerin eğitim kalitesini artırmak için görüş, öneri ve şikayetlerini paylaşabildiği yapıcı iletişim platformu."
+  }
 ])
