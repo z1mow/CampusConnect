@@ -3,90 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= @community_group.name %> Chatroom</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
   <style>
-  .chatbox {
-    height: 450px;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .chatroom-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+      height: calc(100vh - 100px);
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+    .custom-segment {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border: none !important;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.1) !important;
+      backdrop-filter: blur(4px);
+      border-radius: 12px !important;
+      padding: 1.2rem !important;
+      margin-bottom: 0.5rem !important;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      min-height: 0;
+    }
+    .message-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+      padding: 0.8rem 1rem;
+      background: white;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      position: relative;
+      width: 85%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      margin-right: auto;
+      border-top-left-radius: 4px;
+    }
+    .message-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      background: #fafafa;
+    }
+    .message-avatar {
+      margin-right: 0.8rem;
+      width: 32px;
+      height: 32px;
+      background: #00B5AD;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .message-avatar i {
+      color: white;
+      font-size: 1em;
+    }
+    .message-content {
+      flex-grow: 1;
+      font-size: 0.95em;
+      min-width: 0;
+    }
+    .message-username {
+      font-weight: 600;
+      color: #00B5AD;
+      margin-bottom: 0.3rem;
+      font-size: 0.85em;
+      letter-spacing: 0.3px;
+    }
+    .message-text {
+      color: #2c3e50;
+      line-height: 1.4;
+      font-size: 0.95em;
+      word-wrap: break-word;
+      padding: 0.2rem 0;
+    }
+    .message-form {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid rgba(0, 181, 173, 0.2);
+      margin-top: auto;
+    }
+    .message-input {
+      border-radius: 20px !important;
+      border: 1px solid rgba(0, 181, 173, 0.2) !important;
+      background: white !important;
+      padding: 0.8rem 1rem !important;
+      resize: none !important;
+      min-height: 45px !important;
+      max-height: 100px !important;
+      transition: all 0.3s ease !important;
+      margin-bottom: 0 !important;
+      font-size: 0.95em !important;
+    }
+    .message-input:focus {
+      border-color: #00B5AD !important;
+      box-shadow: 0 0 0 2px rgba(0, 181, 173, 0.1) !important;
+    }
+    .send-button {
+      height: 45px !important;
+      width: 45px !important;
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      transition: all 0.3s ease !important;
+      border-radius: 50% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .send-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 181, 173, 0.2);
+    }
+    .chat-header {
+      margin-bottom: 0.8rem !important;
+      padding-bottom: 0.8rem !important;
+      border-bottom: 1px solid rgba(0, 181, 173, 0.1) !important;
+    }
+    .chat-header .header {
+      margin: 0 !important;
+      color: #2c3e50 !important;
+      font-size: 1.4em !important;
+    }
+    .chat-header .sub.header {
+      color: #7f8c8d !important;
+      margin-top: 0.2rem !important;
+      font-size: 0.9em !important;
+    }
+    .back-button-container {
+      padding: 0.5rem 0;
+      flex-shrink: 0;
+    }
+    .back-button {
+      margin: 0 !important;
+    }
+    /* Scrollbar stilleri */
+    .messages-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .messages-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+    }
+    .messages-container::-webkit-scrollbar-thumb {
+      background: rgba(0, 181, 173, 0.3);
+      border-radius: 3px;
+    }
+    .messages-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 181, 173, 0.5);
+    }
   </style>
 </head>
 <body>
-  <div class="ui container" style="margin-top: 20px;">
-    <!-- Header Section -->
-    <header class="ui center aligned segment">
-      <h4 class="ui center aligned medium icon header">
-        <!-- Custom Icon -->
-        <%= image_tag '/saved_icon.png', alt: 'Custom Icon', class: 'ui circular image', style: 'width: 100px; height: 100px; display: block; margin: 0 auto;' %>
-
-        <!-- Styled Community Group Name -->
-        <div style="font-size: 24px; font-weight: bold; margin-top: 10px;">
-          <%= @community_group.name %>
-        </div>
-      </h4>
-    </header>
-
-
-    <!-- Main Content -->
-    <div class="ui stackable two column grid">
-      <!-- Activity Feed -->
-      <div class="twelve wide column">
-        <div class="ui fluid raised card chatbox">
+  <div class="chatroom-container">
+    <div class="ui segment custom-segment">
+      <div class="chat-header">
+        <h2 class="ui header">
+          <i class="comments icon" style="color: #00B5AD;"></i>
           <div class="content">
-            <h4 class="ui header">Messages</h4>
-            <div class="ui small feed" id="messages" data-community-group-id="<%= @community_group.id %>">
-              <%= render @messages %>
-            </div>
+            <%= @community_group.name %>
+            <div class="sub header">Topluluk Sohbet Odası</div>
           </div>
-          <div class="extra content">
-            <%= form_with(model: [@community_group, Message.new], local: true, html: { class: "ui reply form" }) do |f| %>
-              <div class="field">
-                <div class="ui fluid icon input">
-                  <%= f.text_field :body, placeholder: "Type your message here..." %>
-                  <%= f.button '<i class="purple paper plane icon"></i>'.html_safe %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
+        </h2>
       </div>
 
-      <!-- Sidebar -->
-      <div class="four wide column">
-        <div class="ui raised card">
-          <div class="content">
-            <h4 class="ui header">Other Chatrooms</h4>
-            <div class="ui list">
-              <% @other_chatrooms.each do |chatroom| %>
-                <div class="item">
-                  <i class="comments outline icon"></i>
-                  <div class="content">
-                    <%= link_to chatroom.name, community_group_path(chatroom), class: "ui link" %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
+      <div class="messages-container" id="messages" 
+        data-community-group-id="<%= @community_group.id %>"
+        data-current-user-id="<%= current_user.id %>">
+        <% @messages.each do |message| %>
+          <%= render 'messages/message', message: message, current_user: current_user %>
+        <% end %>
       </div>
+
+      <%= form_with(model: [@community_group, Message.new], 
+          local: false, 
+          class: "ui form message-form",
+          data: { remote: true }) do |f| %>
+        <div class="field" style="display: flex; gap: 0.8rem;">
+          <%= f.text_area :body, 
+              placeholder: "Mesajınızı yazın...", 
+              class: "message-input",
+              rows: 1,
+              required: true %>
+          <button type="submit" class="ui circular icon button send-button">
+            <i class="paper plane outline icon"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="back-button-container">
+      <%= link_to community_group_path(@community_group), class: "ui basic fluid button back-button" do %>
+        <i class="arrow left icon"></i>
+        Gruba Dön
+      <% end %>
     </div>
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const messageInput = document.querySelector("input[name='message[body]']");
-    const messageForm = document.querySelector("form.ui.reply.form");
+    $(document).ready(function() {
+      const messagesContainer = document.getElementById('messages');
 
-    if (messageInput && messageForm) {
-      messageInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-          event.preventDefault(); // Varsayılan Enter davranışını engelle
-          messageForm.submit(); // Formu gönder
+      const scrollToBottom = () => {
+        if (messagesContainer) {
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+      };
+
+      scrollToBottom();
+
+      // Form submit işlemi
+      $('.message-form').on('submit', function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const messageInput = form.find('textarea');
+        const message = messageInput.val().trim();
+
+        if (message) {
+          $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function(response) {
+              messageInput.val('');
+              messageInput.trigger('change');
+            },
+            error: function() {
+              alert('Mesaj gönderilemedi. Lütfen tekrar deneyin.');
+            }
+          });
+        }
+        return false;
+      });
+
+      // Enter tuşu ile gönderme
+      $('.message-input').on('keypress', function(e) {
+        if (e.which === 13 && !e.shiftKey) {
+          e.preventDefault();
+          $(this).closest('form').submit();
         }
       });
-    }
-  });
-</script>
 
+      // ActionCable bağlantısı
+      App.chatroom = App.cable.subscriptions.create({
+        channel: "ChatroomChannel",
+        community_group_id: messagesContainer.dataset.communityGroupId
+      }, {
+        received: function(data) {
+          if (data.html) {
+            messagesContainer.insertAdjacentHTML('beforeend', data.html);
+            scrollToBottom();
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>

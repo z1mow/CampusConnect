@@ -4,63 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px 0;
+    }
+    .login-container {
+      padding-top: 2rem;
+    }
+    .ui.form input {
+      background: rgba(255, 255, 255, 0.9) !important;
+    }
+    .custom-segment {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border: none !important;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15) !important;
+      backdrop-filter: blur(4px);
+      border-radius: 15px !important;
+      margin-top: 2rem !important;
+    }
+    .custom-button {
+      background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+      color: white !important;
+      transition: transform 0.2s !important;
+    }
+    .custom-button:hover {
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
-  <h2 class="ui center aligned large header">
-    Welcome to MessageMe - <em>a complete Chat App</em>
-  </h2>
-
-  <h4 class="ui center aligned medium icon header">
-    <i class="circular orange power off tiny icon"></i>
-    Log in to continue
-  </h4>
-
-  <!-- Başarı ve hata mesajlarını göster -->
-  <% if notice %>
-    <div class="ui positive message">
-      <p><%= notice %></p>
-    </div>
-  <% end %>
-
-  <% if alert %>
-    <div class="ui negative message">
-      <p><%= alert %></p>
-    </div>
-  <% end %>
-
-  <div class="ui placeholder segment">
-    <div class="ui two column very relaxed stackable grid">
-      <!-- Login Formu -->
-      <div class="column">
-        <%= form_for(:session, html: {class: "ui form", role: "form"}, url: login_path) do |f| %>
-          <div class="field">
-            <%= f.label :username, "Username" %>
-            <div class="ui left icon input">
-              <%= f.text_field :username, placeholder: "Username" %>
-              <i class="user icon"></i>
-            </div>
-          </div>
-          <div class="field">
-            <%= f.label :password, "Password" %>
-            <div class="ui left icon input">
-              <%= f.password_field :password, placeholder: "Password" %>
-              <i class="lock icon"></i>
-            </div>
-          </div>
-          <%= f.button "Login", class: "ui orange submit button" %>
-        <% end %>
+  <div class="ui container login-container">
+    <h2 class="ui center aligned header" style="color: #2c3e50; font-size: 2.5em; margin-bottom: 0.5em;">
+      Welcome to CampusConnect
+      <div class="sub header" style="color: #7f8c8d; margin-top: 0.5em; font-size: 0.5em;">
+        Connect, Collaborate, and Learn Together
       </div>
+    </h2>
 
-      <!-- Kayıt Olma Linki -->
-      <div class="middle aligned column">
-        <%= link_to new_user_path, class: "ui big orange button" do %>
-          <i class="signup icon"></i>
-          Sign Up
-        <% end %>
+    <!-- Başarı ve hata mesajlarını göster -->
+    <% if notice %>
+      <div class="ui positive message" style="border-radius: 10px;">
+        <p><%= notice %></p>
       </div>
-    </div>
-    <div class="ui vertical divider">
-      Or
+    <% end %>
+
+    <% if alert %>
+      <div class="ui negative message" style="border-radius: 10px;">
+        <p><%= alert %></p>
+      </div>
+    <% end %>
+
+    <div class="ui placeholder segment custom-segment">
+      <div class="ui two column very relaxed stackable grid">
+        <!-- Login Formu -->
+        <div class="column">
+          <%= form_for(:session, html: {class: "ui large form", role: "form"}, url: login_path) do |f| %>
+            <div class="field">
+              <%= f.label :username, "Username", style: "color: #2c3e50;" %>
+              <div class="ui left icon input">
+                <%= f.text_field :username, placeholder: "Enter your username", style: "border-radius: 8px;" %>
+                <i class="user icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <%= f.label :password, "Password", style: "color: #2c3e50;" %>
+              <div class="ui left icon input">
+                <%= f.password_field :password, placeholder: "Enter your password", style: "border-radius: 8px;" %>
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <%= f.button "Sign In", class: "ui fluid large teal submit button custom-button" %>
+          <% end %>
+        </div>
+
+        <!-- Kayıt Olma Linki -->
+        <div class="middle aligned column">
+          <div class="create-account-container">
+            <h4 class="ui header" style="color: #7f8c8d; margin-bottom: 1.5rem;">New to CampusConnect?</h4>
+            <%= link_to new_user_path, class: "ui fluid large teal button custom-button", style: "max-width: 80%;" do %>
+              <i class="signup icon"></i>
+              Create Account
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="ui vertical divider" style="color: #7f8c8d;">
+        Or
+      </div>
     </div>
   </div>
 </body>

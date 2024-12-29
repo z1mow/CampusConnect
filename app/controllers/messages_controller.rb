@@ -7,14 +7,36 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      ActionCable.server.broadcast "chatroom_channel_#{@community_group.id}", render_message(@message)
-      redirect_to community_group_path(@community_group), notice: "Message sent successfully."
+      broadcast_message
+      
+      respond_to do |format|
+        format.html { redirect_to community_group_chatroom_path(@community_group) }
+        format.json { render json: { success: true } }
+      end
     else
-      redirect_to community_group_path(@community_group), alert: "Failed to send message."
+      respond_to do |format|
+        format.html { redirect_to community_group_chatroom_path(@community_group), alert: "Mesaj gönderilemedi." }
+        format.json { render json: { success: false }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
+
+  def broadcast_message
+    html_content = ApplicationController.renderer.render(
+      partial: 'messages/message',
+      locals: { message: @message }
+    )
+
+    ActionCable.server.broadcast(
+      "chatroom_channel_#{@community_group.id}",
+      {
+        html: html_content,
+        sender_id: @message.user_id
+      }
+    )
+  end
 
   def set_community_group
     @community_group = CommunityGroup.find(params[:community_group_id])
@@ -23,11 +45,5 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:body)
   end
-
-  def render_message(message)
-    ApplicationController.render(
-      partial: 'messages/message',
-      locals: { message: message }
-    )
-  end
 end
+

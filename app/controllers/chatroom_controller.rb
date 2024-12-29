@@ -24,9 +24,11 @@ class ChatroomController < ApplicationController
     end
   end
 
+
   def show
     @community_group = CommunityGroup.find(params[:id])
     @messages = @community_group.messages
     @other_chatrooms = CommunityGroup.where.not(id: @community_group.id).limit(5)
   end
   
+

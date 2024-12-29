@@ -6,7 +6,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
 
+
+    <!-- Additional Head Content -->
     <%= yield :head %>
 
     <!-- Semantic UI CSS CDN -->
@@ -23,12 +26,84 @@
       .chatbox {
         height: 450px;
       }
+      .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1) !important;
+        padding: 1rem 0 !important;
+        margin-bottom: 2rem !important;
+      }
+      .navbar .item {
+        color: #2c3e50 !important;
+      }
+      .navbar .item:hover {
+        color: #00B5AD !important;
+      }
+      .navbar .header.item {
+        font-weight: bold !important;
+      }
+      .navbar .primary.button {
+        background: linear-gradient(135deg, #00B5AD 0%, #009c95 100%) !important;
+        color: white !important;
+        transition: transform 0.2s !important;
+      }
+      .navbar .primary.button:hover {
+        transform: translateY(-2px);
+      }
     </style>
   </head>
   <body>
-    <div class="ui small inverted menu">
+    <!-- Navbar -->
+    <div class="ui large menu navbar">
       <div class="ui container">
-        <%= render 'layouts/navigation' %>
+        <%= link_to root_path, class: "header item" do %>
+          <i class="graduation cap icon"></i>
+          CampusConnect
+        <% end %>
+        <%= link_to chatroom_path, class: "item" do %>
+          <i class="comments icon"></i>
+          Chatroom
+        <% end %>
+        <% if logged_in? %>
+        <div class="item">
+          <%= form_with url: user_search_path, method: :get, local: true, class: "ui action input" do %>
+            <%= text_field_tag :query, params[:query], placeholder: "Kullanıcı Ara", class: "prompt" %>
+            <button type="submit" class="ui teal button">
+              <i class="search icon"></i>
+            </button>
+          <% end %>
+        </div>
+        <% end %>
+        <div class="right menu">
+          <% if logged_in? %>
+            <div class="item">
+              <%= link_to account_path, class: "ui dropdown" do %>
+                <i class="user circle icon"></i>
+                Account
+              <% end %>
+            </div>
+            <div class="item">
+              <%= link_to logout_path, class: "ui button" do %>
+                <i class="sign out icon"></i>
+                Logout
+              <% end %>
+            </div>
+          <% else %>
+            <% unless current_page?(login_path) %>
+              <div class="item">
+                <%= link_to login_path, class: "ui button" do %>
+                  <i class="sign in icon"></i>
+                  Sign In
+                <% end %>
+              </div>
+            <% end %>
+            <div class="item">
+              <%= link_to new_user_path, class: "ui primary button" do %>
+                <i class="user plus icon"></i>
+                Sign Up
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
 

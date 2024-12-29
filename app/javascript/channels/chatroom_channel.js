@@ -10,20 +10,19 @@ document.addEventListener("turbolinks:load", () => {
       { channel: "ChatroomChannel", community_group_id: communityGroupId },
       {
         connected() {
-          console.log(`Connected to ChatroomChannel for Community Group ID: ${communityGroupId}`);
+          console.log("Connected to ChatroomChannel");
         },
 
         disconnected() {
-          console.log("Disconnected from ChatroomChannel");
+          // Called when the subscription has been terminated by the server
         },
 
         received(data) {
-          console.log("Received data:", data);
-          // Yeni mesajı DOM'a ekle
-          messagesContainer.insertAdjacentHTML("beforeend", data);
-          // Otomatik kaydırma (opsiyonel)
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        },
+          if (data.html) {
+            messagesContainer.insertAdjacentHTML("beforeend", data.html);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          }
+        }
       }
     );
   }
