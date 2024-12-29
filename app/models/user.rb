@@ -12,7 +12,7 @@ class User < ApplicationRecord
     validates :username, presence: true, 
                         uniqueness: { case_sensitive: false },
                         length: { minimum: 3, maximum: 12 },
-                        format: { with: /\A[a-zA-Z0-9_]+\z/,
+                        format: { with: /\A[a-zA-ZğüşıöçĞÜŞİÖÇ0-9_]+\z/,
                                  message: "sadece harf, rakam ve alt çizgi (_) içerebilir" }
     validates :email, presence: true, uniqueness: true
     validate :email_domain_validation
