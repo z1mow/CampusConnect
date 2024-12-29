@@ -22,26 +22,25 @@
 #    puts "Bu script sadece test veya development ortamında çalıştırılabilir."
 #  end
 admin = User.create!(
-  name: 'Admin User',
+  name: 'Admin',
   username: 'admin',
   email: 'admin@live.acibadem.edu.tr',
-  password: '123456',
-  password_confirmation: '123456',
+  password: 'password',
+  password_confirmation: 'password',
   department: 'Computer_Science',
   title: 'Student'
 )
 
 test_user = User.create!(
-  name: 'Test User',
+  name: 'Test',
   username: 'test',
   email: 'test@live.acibadem.edu.tr',
-  password: '123456',
-  password_confirmation: '123456',
+  password: 'password',
+  password_confirmation: 'password',
   department: 'Computer_Science',
   title: 'Student'
 )
 
-# Test arkadaşlık ilişkisi oluştur
 Friend.create!(
   user: admin,
   friend: test_user,
