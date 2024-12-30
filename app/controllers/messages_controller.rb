@@ -3,21 +3,30 @@ class MessagesController < ApplicationController
   before_action :set_community_group 
 
   def create
-    @message = @community_group.messages.build(message_params)
-    @message.user = current_user
+    # Transaction ve izolasyon seviyesi ekleniyor
+    ActiveRecord::Base.transaction(isolation: :read_committed) do
+      @message = @community_group.messages.build(message_params)
+      @message.user = current_user
 
-    if @message.save
-      broadcast_message
-      
-      respond_to do |format|
-        format.html { redirect_to community_group_chatroom_path(@community_group) }
-        format.json { render json: { success: true } }
+      if @message.save
+        broadcast_message
+
+        respond_to do |format|
+          format.html { redirect_to community_group_chatroom_path(@community_group) }
+          format.json { render json: { success: true } }
+        end
+      else
+        raise ActiveRecord::Rollback # Hata durumunda tüm işlemleri geri al
+        respond_to do |format|
+          format.html { redirect_to community_group_chatroom_path(@community_group), alert: "Mesaj gönderilemedi." }
+          format.json { render json: { success: false }, status: :unprocessable_entity }
+        end
       end
-    else
-      respond_to do |format|
-        format.html { redirect_to community_group_chatroom_path(@community_group), alert: "Mesaj gönderilemedi." }
-        format.json { render json: { success: false }, status: :unprocessable_entity }
-      end
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { redirect_to community_group_chatroom_path(@community_group), alert: "Mesaj gönderilemedi." }
+      format.json { render json: { success: false }, status: :unprocessable_entity }
     end
   end
 
@@ -46,4 +55,3 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:body)
   end
 end
-
