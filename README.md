@@ -1,24 +1,33 @@
-# README
+# Campus Connect
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Kurulum
 
-Things you may want to cover:
+1. Projeyi klonlayın:
+```bash
+git clone [repo-url]
+cd campus_connect
+```
 
-* Ruby version
+2. Gerekli gem'leri yükleyin:
+```bash
+bundle install
+```
 
-* System dependencies
+3. Veritabanını kurun:
+```bash
+bin/setup_db.sh
+```
 
-* Configuration
+## Veritabanı Yönetimi
 
-* Database creation
+### Materyalleştirilmiş Görünümleri Güncelleme
 
-* Database initialization
+Grup mesaj özetlerini güncellemek için aşağıdaki komutu çalıştırın:
 
-* How to run the test suite
+```bash
+bin/rails views:refresh_group_messages
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Geliştirme
 
-* Deployment instructions
-
-* ...
+[Diğer geliştirme talimatları...]

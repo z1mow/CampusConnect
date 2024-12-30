@@ -1,9 +1,9 @@
 CREATE MATERIALIZED VIEW group_message_summary AS
 SELECT
-    Community_Group_ID,
+    community_group_id,
     COUNT(*) AS total_messages,
-    MAX(Sent_at) AS last_message_time
+    MAX(created_at) AS last_message_time
 FROM
-    MESSAGES
+    messages
 GROUP BY
-    Community_Group_ID;
+    community_group_id;

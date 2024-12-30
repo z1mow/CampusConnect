@@ -67,7 +67,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_040000) do
     t.bigint "community_group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "sent_at", precision: nil
     t.index ["community_group_id"], name: "index_messages_on_community_group_id"
   end
 
