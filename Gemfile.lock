@@ -272,6 +272,8 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    rubocop-rspec (3.3.0)
+      rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.2)
       ffi (~> 1.12)
@@ -351,7 +353,10 @@ DEPENDENCIES
   rails (~> 7.2.2)
   redis
   rspec-rails
+  rubocop
+  rubocop-rails
   rubocop-rails-omakase
+  rubocop-rspec
   selenium-webdriver (= 4.27.0)
   shoulda-matchers
   sprockets-rails

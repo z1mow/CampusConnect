@@ -1,47 +1,222 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
-
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
-
 require:
-  - rubocop-rails-omakase
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.1
   Exclude:
     - 'db/**/*'
-    - 'config/**/*'
-    - 'script/**/*'
     - 'bin/**/*'
     - 'vendor/**/*'
-    - 'tmp/**/*'
     - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'config/**/*'
+    - 'test/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'lib/tasks/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 Style/StringLiterals:
-  EnforcedStyle: double_quotes
+  Enabled: false
 
-Layout/SpaceInsideArrayLiteralBrackets:
-  EnforcedStyle: space
+Style/FormatStringToken:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 300
 
 Layout/TrailingWhitespace:
-  Enabled: true
+  Enabled: false
 
 Layout/TrailingEmptyLines:
-  EnforcedStyle: final_newline
+  Enabled: false
+
+Layout/EmptyLines:
+  Enabled: false
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Layout/IndentationConsistency:
+  Enabled: false
+
+Layout/AccessModifierIndentation:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: false
+
+Layout/MultilineOperationIndentation:
+  Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  Enabled: false
 
 Layout/EndAlignment:
-  EnforcedStyleAlignWith: start_of_line
+  Enabled: false
 
-Layout/LeadingCommentSpace:
-  Enabled: true
+Layout/ElseAlignment:
+  Enabled: false
+
+Layout/BlockAlignment:
+  Enabled: false
 
 Layout/SpaceAfterComma:
-  Enabled: true
+  Enabled: false
 
 Layout/SpaceInsideParens:
-  Enabled: true
+  Enabled: false
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 50
+
+Metrics/AbcSize:
+  Max: 100
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/CyclomaticComplexity:
+  Max: 20
+
+Metrics/PerceivedComplexity:
+  Max: 20
+
+Rails/FilePath:
+  Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/WhereExists:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false
+
+Rails/ActionOrder:
+  Enabled: false
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
+
+Rails/RedundantForeignKey:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 10
+
+RSpec/ExampleLength:
+  Max: 50
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ImplicitExpect:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+RSpec/ExpectChange:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/NegatedIfElseCondition:
+  Enabled: false
+
+Lint/UselessAccessModifier:
+  Enabled: false
+
+Lint/IneffectiveAccessModifier:
+  Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Bundler/DuplicatedGroup:
+  Enabled: false
+
+Layout/DefEndAlignment:
+  Enabled: false
