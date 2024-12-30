@@ -7,7 +7,7 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: admin # PostgreSQL kullanıcı adınız
-  password: <%= ENV['POSTGRES_PASSWORD'] %> # PostgreSQL şifreniz (varsa)
+  password: password # PostgreSQL şifreniz (varsa)
   host: localhost # PostgreSQL sunucu adresi (genellikle localhost)
 
 development:
@@ -24,5 +24,5 @@ production:
   <<: *default
   database: myapp_production # Üretim ortamı için veritabanı adı
   username: myapp # Üretim ortamı için PostgreSQL kullanıcı adı
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %> # Şifreyi environment variable olarak tanımlayın
+  password: password # Şifreyi environment variable olarak tanımlayın
   host: <%= ENV['DATABASE_HOST'] || 'localhost' %> # Üretim sunucusunun adresi
