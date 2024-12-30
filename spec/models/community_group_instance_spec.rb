@@ -1,32 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe CommunityGroup, type: :model do
-  describe '#created_by?' do
-    let(:creator) do
-      User.create!(
-        name: 'Jane Doe',
-        username: 'janedoe', # Add valid username
-        email: 'jane@live.acibadem.edu.tr', # Valid domain
-        password: 'password'
+  describe "#created_by?" do
+    let(:creator) { User.create!(name: "Creator", username: "creator", email: "creator@acibadem.edu.tr", password: "password123") }
+    let(:other_user) { User.create!(name: "Other", username: "other", email: "other@acibadem.edu.tr", password: "password123") }
+    let(:group) do
+      # Create group without running callbacks
+      group = CommunityGroup.new(
+        name: "Test Group",
+        description: "A test group",
+        category: "study",
+        creator: creator,
+        default: false
       )
+      # Stub the add_creator_as_member method to do nothing
+      allow(group).to receive(:add_creator_as_member)
+      group.save(validate: false)
+      group
     end
 
-    let(:other_user) do
-      User.create!(
-        name:,
-        username: 'johndoe', # Add valid username
-        email: 'john@live.acibadem.edu.tr', # Valid domain
-        password: 'password'
-      )
-    end
-
-    let(:group) { CommunityGroup.create!(name: 'Test Group', creator: creator) }
-
-    it 'returns true if the user is the creator' do
+    it "returns true if the user is the creator" do
       expect(group.created_by?(creator)).to be true
     end
 
-    it 'returns false if the user is not the creator' do
+    it "returns false if the user is not the creator" do
       expect(group.created_by?(other_user)).to be false
     end
   end

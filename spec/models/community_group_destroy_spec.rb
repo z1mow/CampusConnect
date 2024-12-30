@@ -1,35 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe CommunityGroup, type: :model do
-  describe 'dependent destroy' do
-    let(:creator) do
-      User.create!(
-        name: 'Jane Doe',
-        username: 'janedoe', # Valid username
-        email: 'jane@live.acibadem.edu.tr', # Valid email
-        password: 'password'
+  include_context "community group creation"
+
+  describe "dependent destroy" do
+    let(:member) do
+      user = User.create!(
+        name: "Member",
+        username: "member",
+        email: "member@acibadem.edu.tr",
+        password: "password123"
       )
+      insert_user_into_partitions(user)
+      user
     end
 
-    let(:user) do
-      User.create!(
-        name: 'John Doe',
-        username: 'johndoe', # Valid username
-        email: 'john@live.acibadem.edu.tr', # Valid email
-        password: 'password'
-      )
+    it "destroys associated group_members when destroyed" do
+      initial_count = GroupMember.count  # Count including creator
+      group_member = GroupMember.create!(user: member, community_group: group)
+      expect { group.destroy }.to change { GroupMember.count }.by(-(GroupMember.count - initial_count))
     end
 
-    let(:group) { CommunityGroup.create!(name: 'Test Group', creator: creator) }
-
-    it 'destroys associated group_members when destroyed' do
-      group.group_members.create!(user: user)
-      expect { group.destroy }.to change { GroupMember.count }.by(-1)
-    end
-
-    it 'destroys associated messages when destroyed' do
-      group.messages.create!(body: 'Hello, world!', user: creator)
-      expect { group.destroy }.to change { Message.count }.by(-1)
+    it "destroys associated messages when destroyed" do
+      initial_count = Message.count
+      message = Message.create!(user: creator, community_group: group, body: "Test message")
+      expect { group.destroy }.to change { Message.count }.by(-(Message.count - initial_count))
     end
   end
 end

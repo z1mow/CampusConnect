@@ -15,6 +15,10 @@ class CommunityGroup < ApplicationRecord
 
     after_create :add_creator_as_member
 
+    def created_by?(user)
+      creator_id == user.id
+    end
+
     private
 
     def add_creator_as_member
