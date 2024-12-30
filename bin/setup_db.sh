@@ -7,6 +7,7 @@ export PGPASSWORD=password
 
 # Rails veritabanı işlemleri
 echo "📦 Rails veritabanı oluşturuluyor..."
+RAILS_ENV=development bin/rails db:drop
 RAILS_ENV=development bin/rails db:create
 echo "🔧 Rails migrasyonları çalıştırılıyor..."
 RAILS_ENV=development bin/rails db:migrate
