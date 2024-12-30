@@ -96,10 +96,13 @@ cd CampusConnect
 bundle install
 ```
 
-4. Create database:
+4. Veritabanını kurun:
 ```bash
-rails db:create
-rails db:migrate
+bin/setup_db.sh
+```
+Not: Grup mesaj özetlerini güncellemek için aşağıdaki komutu çalıştırın:
+```bash
+bin/rails views:refresh_group_messages
 ```
 
 5. Start the server:

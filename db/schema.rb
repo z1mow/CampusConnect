@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_29_133815) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -490,6 +490,28 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_133815) do
   add_foreign_key "group_members", "users_partition_7", column: "user_id", name: "group_members_user_id_fkey7"
   add_foreign_key "group_members", "users_partition_8", column: "user_id", name: "group_members_user_id_fkey8"
   add_foreign_key "group_members", "users_partition_9", column: "user_id", name: "group_members_user_id_fkey9"
+  add_foreign_key "messages", "users"
+  add_foreign_key "messages", "users_partition_0", column: "user_id", name: "messages_user_id_fkey"
+  add_foreign_key "messages", "users_partition_1", column: "user_id", name: "messages_user_id_fkey1"
+  add_foreign_key "messages", "users_partition_10", column: "user_id", name: "messages_user_id_fkey10"
+  add_foreign_key "messages", "users_partition_11", column: "user_id", name: "messages_user_id_fkey11"
+  add_foreign_key "messages", "users_partition_12", column: "user_id", name: "messages_user_id_fkey12"
+  add_foreign_key "messages", "users_partition_13", column: "user_id", name: "messages_user_id_fkey13"
+  add_foreign_key "messages", "users_partition_14", column: "user_id", name: "messages_user_id_fkey14"
+  add_foreign_key "messages", "users_partition_15", column: "user_id", name: "messages_user_id_fkey15"
+  add_foreign_key "messages", "users_partition_2", column: "user_id", name: "messages_user_id_fkey2"
+  add_foreign_key "messages", "users_partition_3", column: "user_id", name: "messages_user_id_fkey3"
+  add_foreign_key "messages", "users_partition_4", column: "user_id", name: "messages_user_id_fkey4"
+  add_foreign_key "messages", "users_partition_5", column: "user_id", name: "messages_user_id_fkey5"
+  add_foreign_key "messages", "users_partition_6", column: "user_id", name: "messages_user_id_fkey6"
+  add_foreign_key "messages", "users_partition_7", column: "user_id", name: "messages_user_id_fkey7"
+  add_foreign_key "messages", "users_partition_8", column: "user_id", name: "messages_user_id_fkey8"
+  add_foreign_key "messages", "users_partition_9", column: "user_id", name: "messages_user_id_fkey9"
+  add_foreign_key "messages_apr_2025_to_may_2025", "users"
+  add_foreign_key "messages_dec_2024_to_jan_2025", "users"
+  add_foreign_key "messages_default", "users"
+  add_foreign_key "messages_feb_2025_to_mar_2025", "users"
+  add_foreign_key "messages_jun_2025_to_jul_2025", "users"
   add_foreign_key "private_messages", "users", column: "receiver_id"
   add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "private_messages", "users_partition_0", column: "receiver_id", name: "private_messages_receiver_id_fkey"

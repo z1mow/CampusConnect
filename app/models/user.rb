@@ -80,6 +80,10 @@ class User < ApplicationRecord
   def private_messages_with(other_user)
     PrivateMessage.between_users(self, other_user)
   end
+  # Kullanıcının bir grupta en son aktif olduğu zamanı döndür
+  def last_seen_at(group)
+    group_members.find_by(community_group: group)&.last_seen_at || Time.at(0)
+  end
 
   private
 
@@ -93,6 +97,7 @@ class User < ApplicationRecord
     def full_name
       name || username
     end
+  end
 
     private
 
@@ -108,4 +113,3 @@ class User < ApplicationRecord
       errors.add(:email, 'must be from an allowed domain (e.g., @live.acibadem.edu.tr, @acibadem.edu.tr)')
     end
   end
-end
