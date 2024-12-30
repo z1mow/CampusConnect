@@ -34,7 +34,10 @@ class MessageService
   
   def self.refresh_message_summary(group_id)
     ActiveRecord::Base.connection.execute(
-      "REFRESH MATERIALIZED VIEW CONCURRENTLY group_message_summary WHERE group_id = #{group_id}"
+      ActiveRecord::Base.sanitize_sql_array([
+        "REFRESH MATERIALIZED VIEW CONCURRENTLY group_message_summary WHERE group_id = ?",
+        group_id
+      ])
     )
   end
 end 

@@ -103,7 +103,6 @@ GEM
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
     drb (2.2.1)
-    error_highlight (0.3.0)
     erubi (1.13.1)
     ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
@@ -341,7 +340,6 @@ DEPENDENCIES
   brakeman
   capybara
   debug
-  error_highlight (~> 0.3.0)
   hirb
   image_processing (~> 1.2)
   importmap-rails
