@@ -70,6 +70,8 @@ group :development do
 
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
   gem "error_highlight", '~> 0.7.0', platforms: [ :ruby ]
+
+  gem 'rails-erd'  # Entity-Relationship Diagram generator
 end
 
 group :test do
