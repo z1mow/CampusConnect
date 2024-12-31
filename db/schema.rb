@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_30_142353) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_31_002752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_30_142353) do
     t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "message_count"
   end
 
   create_table "direct_messages", force: :cascade do |t|
@@ -135,22 +136,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_30_142353) do
     t.bigint "community_group_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.string "recipient_type", null: false
-    t.bigint "recipient_id", null: false
-    t.string "actor_type", null: false
-    t.bigint "actor_id", null: false
-    t.string "action"
-    t.string "notifiable_type", null: false
-    t.bigint "notifiable_id", null: false
-    t.datetime "read_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["actor_type", "actor_id"], name: "index_notifications_on_actor"
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
-    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
   create_table "private_messages", force: :cascade do |t|
