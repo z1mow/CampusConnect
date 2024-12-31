@@ -1,17 +1,8 @@
 # CampusConnect
 
-## 🇹🇷 Türkçe
-
 ### Proje Hakkında
-CampusConnect, üniversite öğrencileri için geliştirilmiş modern bir sosyal platform ve akademik yönetim sistemidir. Öğrenciler, öğretmenler ve yöneticiler arasında etkili iletişim ve işbirliği sağlar.
 
 ### Özellikler
-- 👥 Kullanıcı yetkilendirme ve rol bazlı erişim sistemi
-- 📚 Ders yönetimi ve akademik takvim
-- 💬 Gerçek zamanlı mesajlaşma ve forum sistemi
-- 📝 Ödev takip ve değerlendirme sistemi
-- 📊 Akademik performans analizi
-- 📱 Responsive tasarım ile mobil uyumluluk
 
 ### Teknolojik Altyapı
 - Ruby 3.2.2
@@ -19,7 +10,6 @@ CampusConnect, üniversite öğrencileri için geliştirilmiş modern bir sosyal
 - PostgreSQL
 - Redis
 - Node.js & Yarn
-- Hotwire (Turbo & Stimulus)
 - TailwindCSS
 
 ### Kurulum
@@ -39,13 +29,37 @@ cd CampusConnect
 bundle install
 ```
 
-4. Veritabanını oluşturun:
+Eğer postgresql kurulu değilse:
 ```bash
-rails db:create
-rails db:migrate
+brew install postgresql
+brew services start postgresql
+```
+Not: Admin kullanıcısı oluşturulması için:
+```bash
+psql postgres (veya psql -U postgres)
+SQL : CREATE ROLE admin WITH LOGIN SUPERUSER PASSWORD 'password';
+quit
 ```
 
-5. Sunucuyu başlatın:
+4. Veritabanını oluşturun:
+```bash
+rails db:drop
+rails db:create
+rails db:migrate
+rails db:seed
+bin/setup_db.sh
+```
+Not: Grup mesaj özetlerini(materialized view) güncellemek gerekirse aşağıdaki komutu çalıştırabilirsiniz:
+```bash
+bin/rails views:refresh_group_messages
+```
+5. Webpacker kurulumu:
+```bash
+rails webpacker:install
+bin/webpack
+```
+
+6. Sunucuyu başlatın:
 ```bash
 rails server
 ```
@@ -54,69 +68,15 @@ rails server
 ```bash
 rspec
 ```
-
 ---
-
-## 🇬🇧 English
-
-### About
-CampusConnect is a modern social platform and academic management system developed for university students. It facilitates effective communication and collaboration between students, teachers, and administrators.
-
-### Features
-- 👥 User authentication and role-based access control
-- 📚 Course management and academic calendar
-- 💬 Real-time messaging and forum system
-- 📝 Assignment tracking and evaluation
-- 📊 Academic performance analytics
-- 📱 Mobile responsiveness with responsive design
-
-### Tech Stack
-- Ruby 3.2.2
-- Ruby on Rails 7.1
-- PostgreSQL
-- Redis
-- Node.js & Yarn
-- Hotwire (Turbo & Stimulus)
-- TailwindCSS
-
-### Installation
-1. Ensure Ruby is installed:
-```bash
-ruby -v
-```
-
-2. Clone the project:
-```bash
-git clone https://github.com/yourusername/CampusConnect.git
-cd CampusConnect
-```
-
-3. Install required gems:
-```bash
-bundle install
-```
-
-4. Veritabanını kurun:
-```bash
-bin/setup_db.sh
-```
-Not: Grup mesaj özetlerini güncellemek için aşağıdaki komutu çalıştırın:
-```bash
-bin/rails views:refresh_group_messages
-```
-
-5. Start the server:
-```bash
-rails server
-```
-
-### Testing
-```bash
-rspec
-```
 
 ## 🌐 License
 MIT License
 
-## 📫 Contact
-Email: your.email@example.com
+## 📫 If there is a problem, please contact
+Email: 
+nilufer.gulciftci@live.acibadem.edu.tr
+nursen.karadayi@live.acibadem.edu.tr
+ovgu.gulec@live.acibadem.edu.tr
+umut.kilinckaya@live.acibadem.edu.tr
+sakir.ogut@live.acibadem.edu.tr
