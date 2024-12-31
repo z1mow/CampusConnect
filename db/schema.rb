@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_31_002752) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_31_064144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_31_002752) do
     t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "message_count"
+    t.integer "message_count", default: 0
   end
 
   create_table "direct_messages", force: :cascade do |t|
