@@ -20,7 +20,7 @@ ruby -v
 
 2. Projeyi klonlayın:
 ```bash
-git clone https://github.com/yourusername/CampusConnect.git
+git clone https://github.com/z1mow/CampusConnect.git
 cd CampusConnect
 ```
 
