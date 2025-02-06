@@ -41,7 +41,7 @@
       border: 1px solid rgba(0, 181, 173, 0.3);
     }
     .group-card.member::before {
-      content: "Üyesisiniz";
+      content: "Member";
       position: absolute;
       top: 1rem;
       right: -2rem;
@@ -57,7 +57,7 @@
       border: 1px solid rgba(0, 181, 173, 0.4);
     }
     .group-card.creator::before {
-      content: "Kurucusunuz";
+      content: "Creator";
       position: absolute;
       top: 1rem;
       right: -2rem;
@@ -229,10 +229,10 @@
     <% end %>
 
     <div class="groups-header">
-      <h1 class="groups-title">Topluluk Grupları</h1>
+      <h1 class="groups-title">Community Groups</h1>
       <%= link_to new_community_group_path, class: "ui button create-group-button" do %>
         <i class="plus icon"></i>
-        Yeni Grup Oluştur
+        Create New Group
       <% end %>
     </div>
 
@@ -253,7 +253,7 @@
           <% end %>
           <div class="group-members">
             <i class="user icon"></i>
-            <%= pluralize(group.users.count, 'üye') %>
+            <%= pluralize(group.users.count, 'member') %>
             <div class="last-message-time">
               <i class="clock outline icon"></i>
               <%= group.last_message_time %>
@@ -262,13 +262,13 @@
           <% if defined?(group.unread_messages_count) && group.unread_messages_count(current_user).positive? %>
             <div class="unread-messages">
               <i class="envelope icon"></i>
-              <%= group.unread_messages_count(current_user) %> okunmamış mesaj
+              <%= group.unread_messages_count(current_user) %> unread messages
             </div>
           <% end %>
           <div class="group-action">
             <%= link_to community_group_path(group), class: "ui button chatroom-button" do %>
               <i class="users icon"></i>
-              Gruba Git
+              Join Group
             <% end %>
           </div>
         </div>

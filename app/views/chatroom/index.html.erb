@@ -180,7 +180,7 @@
           <i class="comments icon" style="color: #8A2BE2;"></i>
           <div class="content">
             <%= @community_group.name %>
-            <div class="sub header">Topluluk Sohbet Odası</div>
+            <div class="sub header">Community Chat Room</div>
           </div>
         </h2>
       </div>
@@ -199,7 +199,7 @@
           data: { remote: true }) do |f| %>
         <div class="field" style="display: flex; gap: 0.8rem;">
           <%= f.text_area :body, 
-              placeholder: "Mesajınızı yazın...", 
+              placeholder: "Type your message...", 
               class: "message-input",
               rows: 1,
               required: true %>
@@ -213,7 +213,7 @@
     <div class="back-button-container">
       <%= link_to community_group_path(@community_group), class: "ui basic fluid button back-button" do %>
         <i class="arrow left icon"></i>
-        Gruba Dön
+        Back to Group
       <% end %>
     </div>
   </div>

@@ -62,13 +62,13 @@
         <div class="ui container">
         <%= link_to community_groups_path, class: "item" do %>
           <i class="users icon"></i>
-          Topluluk Grupları
+          Community Groups
         <% end %>
         </div>
         <% if logged_in? %>
         <div class="item">
           <%= form_tag search_users_path, method: :get, class: "ui action input" do %>
-            <%= text_field_tag :q, params[:q], placeholder: "Kullanıcı Ara...", class: "prompt" %>
+            <%= text_field_tag :q, params[:q], placeholder: "Search Users...", class: "prompt" %>
             <button type="submit" class="ui teal button">
               <i class="search icon"></i>
             </button>
@@ -83,12 +83,12 @@
               <div class="menu">
                 <%= link_to user_path(current_user), class: "item" do %>
                   <i class="user icon"></i>
-                  Profilim
+                  My Profile
                 <% end %>
                 <div class="divider"></div>
                 <%= link_to logout_path, class: "item" do %>
                   <i class="sign out icon"></i>
-                  Çıkış Yap
+                  Sign Out
                 <% end %>
               </div>
             </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <style>
     .edit-container {
@@ -100,7 +100,7 @@
       position: relative;
     }
     .readonly-field::after {
-      content: "Değiştirilemez";
+      content: "Read-only";
       position: absolute;
       right: 8px;
       top: 50%;
@@ -117,20 +117,20 @@
   <div class="edit-container">
     <div class="edit-card">
       <div class="edit-header">
-        <h1 class="edit-title">Profil Düzenle</h1>
+        <h1 class="edit-title">Edit Profile</h1>
       </div>
 
       <%= form_with(model: @user, url: user_path(@user), method: :patch, local: true, multipart: true) do |form| %>
         <div class="form-row">
           <div class="form-group">
-            <%= form.label :name, "Ad", class: "form-label" %>
+            <%= form.label :name, "Name", class: "form-label" %>
             <div class="readonly-field">
               <%= form.text_field :name, class: "form-control", readonly: true, disabled: true %>
             </div>
           </div>
 
           <div class="form-group">
-            <%= form.label :username, "Kullanıcı Adı", class: "form-label" %>
+            <%= form.label :username, "Username", class: "form-label" %>
             <div class="readonly-field">
               <%= form.text_field :username, class: "form-control", readonly: true, disabled: true %>
             </div>
@@ -138,17 +138,17 @@
         </div>
 
         <div class="form-group">
-          <%= form.label :password, "Şifre", class: "form-label" %>
+          <%= form.label :password, "Password", class: "form-label" %>
           <%= form.password_field :password, class: "form-control" %>
-          <div class="form-hint">Değiştirmek istemiyorsanız boş bırakın</div>
+          <div class="form-hint">Leave blank if you don't want to change it</div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <%= form.label :department, "Departman", class: "form-label" %>
+            <%= form.label :department, "Department", class: "form-label" %>
             <%= form.select :department, 
                 User::DEPARTMENTS.map { |d| [d.humanize, d] }, 
-                { prompt: "Departman Seçin" }, 
+                { prompt: "Select Department" }, 
                 class: "form-select" %>
           </div>
 
@@ -156,27 +156,27 @@
             <%= form.label :title, "Title", class: "form-label" %>
             <%= form.select :title, 
                 User::TITLES.map { |t| [t.humanize, t] }, 
-                { prompt: "Title Seçin" }, 
+                { prompt: "Select Title" }, 
                 class: "form-select" %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= form.label :student_class, "Sınıf", class: "form-label" %>
+          <%= form.label :student_class, "Class", class: "form-label" %>
           <%= form.select :student_class, 
               User::STUDENT_CLASS.map { |d| [d.humanize, d] }, 
-              { prompt: "Sınıf Seçin" }, 
+              { prompt: "Select Class" }, 
               class: "form-select" %>
         </div>
 
         <div class="form-group">
-          <%= form.label :profile_picture, "Profil Fotoğrafı", class: "form-label" %>
+          <%= form.label :profile_picture, "Profile Picture", class: "form-label" %>
           <%= form.file_field :profile_picture, class: "form-control" %>
-          <div class="form-hint">Desteklenen formatlar: PNG, JPG, JPEG</div>
+          <div class="form-hint">Supported formats: PNG, JPG, JPEG</div>
         </div>
 
         <div class="form-group">
-          <%= form.submit "Kaydet", class: "submit-button" %>
+          <%= form.submit "Save", class: "submit-button" %>
         </div>
       <% end %>
     </div>

@@ -19,7 +19,7 @@
 #      end
 #    end
 #  else
-#    puts "Bu script sadece test veya development ortamında çalıştırılabilir."
+#    puts "This script can only be run in test or development environment."
 #  end
 admin = User.create!(
   name: 'Admin',
@@ -49,31 +49,31 @@ Friend.create!(
 
 CommunityGroup.create!([
   { 
-    name: "Kadın Hakları Grubu", 
+    name: "Women's Rights Group", 
     creator_id: admin.id, 
     default: true, 
     category: "other", 
-    description: "Üniversite kampüsünde kadın haklarını savunan, farkındalık oluşturan ve dayanışmayı güçlendiren bir topluluk. Birlikte daha güçlüyüz!"
+    description: "A community that advocates women's rights, raises awareness, and strengthens solidarity on the university campus. Together we are stronger!"
   },
   { 
-    name: "Hayvan Hakları Grubu", 
+    name: "Animal Rights Group", 
     creator_id: admin.id, 
     default: true, 
     category: "other", 
-    description: "Kampüsteki dostlarımızın sesi olmak, onları korumak ve yaşam haklarını savunmak için bir araya gelen gönüllüler topluluğu."
+    description: "A community of volunteers coming together to be the voice of our campus friends, protect them, and defend their right to life."
   },
   { 
-    name: "İnsan Hakları Grubu", 
+    name: "Human Rights Group", 
     creator_id: admin.id, 
     default: true, 
     category: "other", 
-    description: "Temel insan haklarını savunan, ayrımcılıkla mücadele eden ve eşit bir dünya için çalışan öğrenci topluluğu."
+    description: "A student community that advocates fundamental human rights, fights discrimination, and works towards an equal world."
   },
   { 
-    name: "Okul Hakkında Şikayet", 
+    name: "School Feedback", 
     creator_id: admin.id, 
     default: true, 
     category: "other", 
-    description: "Öğrencilerin eğitim kalitesini artırmak için görüş, öneri ve şikayetlerini paylaşabildiği yapıcı iletişim platformu."
+    description: "A constructive communication platform where students can share their views, suggestions, and concerns to improve educational quality."
   }
 ])

@@ -5,92 +5,87 @@
         <i class="graduation cap icon"></i>
         CampusConnect
       </h1>
-      <p class="hero-subtitle">Üniversite topluluklarını keşfet, bağlan, iletişimde kal!</p>
+      <p class="hero-subtitle">Discover university communities, connect, and stay in touch!</p>
       
       <% unless logged_in? %>
         <div class="cta-buttons">
           <%= link_to new_user_path, class: "ui huge primary button" do %>
             <i class="user plus icon"></i>
-            Hemen Katıl
+            Join Now
           <% end %>
           <%= link_to login_path, class: "ui huge basic button" do %>
             <i class="sign in icon"></i>
-            Giriş Yap
+            Sign In
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
 
-
-
   <% if logged_in? %>
     <div class="features-section">
-  <h2>Ana Gruplarımız</h2>
-  <div class="features-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto;">
-    <!-- Kadın Hakları Grubu -->
-    <div class="feature-card">
-      <%= link_to community_group_path(@default_groups[0]), style: "text-decoration: none; color: inherit;" do %>
-        <i class="users icon"></i>
-        <h3><%= @default_groups[0].name %></h3>
-        <p><%= @default_groups[0].description %></p>
-      <% end %>
-    </div>
+      <h2>Main Groups</h2>
+      <div class="features-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto;">
+        <div class="feature-card">
+          <%= link_to community_group_path(@default_groups[0]), style: "text-decoration: none; color: inherit;" do %>
+            <i class="users icon"></i>
+            <h3><%= @default_groups[0].name %></h3>
+            <p><%= @default_groups[0].description %></p>
+          <% end %>
+        </div>
 
-    <!-- Hayvan Hakları Grubu -->
-    <div class="feature-card">
-      <%= link_to community_group_path(@default_groups[1]), style: "text-decoration: none; color: inherit;" do %>
-        <i class="comments icon"></i>
-        <h3><%= @default_groups[1].name %></h3>
-        <p><%= @default_groups[1].description %></p>
-      <% end %>
-    </div>
+        <div class="feature-card">
+          <%= link_to community_group_path(@default_groups[1]), style: "text-decoration: none; color: inherit;" do %>
+            <i class="comments icon"></i>
+            <h3><%= @default_groups[1].name %></h3>
+            <p><%= @default_groups[1].description %></p>
+          <% end %>
+        </div>
 
-    <!-- Okul Hakkında Şikayet Grubu -->
-    <div class="feature-card">
-      <%= link_to community_group_path(@default_groups[2]), style: "text-decoration: none; color: inherit;" do %>
-        <i class="calendar icon"></i>
-        <h3><%= @default_groups[2].name %></h3>
-        <p><%= @default_groups[2].description %></p>
-      <% end %>
-    </div>
+        <div class="feature-card">
+          <%= link_to community_group_path(@default_groups[2]), style: "text-decoration: none; color: inherit;" do %>
+            <i class="calendar icon"></i>
+            <h3><%= @default_groups[2].name %></h3>
+            <p><%= @default_groups[2].description %></p>
+          <% end %>
+        </div>
 
-    <!-- İnsan Hakları Grubu -->
-    <div class="feature-card">
-      <%= link_to community_group_path(@default_groups[3]), style: "text-decoration: none; color: inherit;" do %>
-        <i class="shield icon"></i>
-        <h3><%= @default_groups[3].name %></h3>
-        <p><%= @default_groups[3].description %></p>
-      <% end %>
+        <div class="feature-card">
+          <%= link_to community_group_path(@default_groups[3]), style: "text-decoration: none; color: inherit;" do %>
+            <i class="shield icon"></i>
+            <h3><%= @default_groups[3].name %></h3>
+            <p><%= @default_groups[3].description %></p>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<% end %>
+  <% end %>
+
   <div class="features-section">
-    <h2>Neler Sunuyoruz?</h2>
+    <h2>What We Offer?</h2>
     <div class="features-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto;">
       <div class="feature-card">
         <i class="users icon"></i>
-        <h3>Topluluk Grupları</h3>
-        <p>İlgi alanlarına göre gruplara katıl, yeni arkadaşlar edin ve etkinlikleri takip et.</p>
+        <h3>Community Groups</h3>
+        <p>Join groups based on your interests, make new friends, and follow events.</p>
       </div>
 
       <div class="feature-card">
         <i class="comments icon"></i>
-        <h3>Gerçek Zamanlı Sohbet</h3>
-        <p>Grup üyeleriyle anlık mesajlaş, fikir alışverişinde bulun ve iletişimde kal.</p>
+        <h3>Real-Time Chat</h3>
+        <p>Chat instantly with group members, exchange ideas, and stay connected.</p>
       </div>
 
       <div class="feature-card">
         <i class="calendar icon"></i>
-        <h3>Etkinlik Takibi</h3>
-        <p>Topluluğunun düzenlediği etkinliklerden haberdar ol ve katılım sağla.</p>
+        <h3>Event Tracking</h3>
+        <p>Stay informed about your community's events and participate.</p>
       </div>
 
       <div class="feature-card">
         <i class="shield icon"></i>
-        <h3>Güvenli Ortam</h3>
-        <p>Sadece üniversite mail adresi olan öğrenciler katılabilir, güvenli bir platform.</p>
+        <h3>Secure Environment</h3>
+        <p>Only students with university email addresses can join, ensuring a secure platform.</p>
       </div>
     </div>
   </div>

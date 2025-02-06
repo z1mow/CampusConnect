@@ -21,7 +21,7 @@ class CommunityGroupsController < ApplicationController
       @community_group = CommunityGroup.new(community_group_params)
       @community_group.creator = current_user
       if @community_group.save
-        redirect_to @community_group, notice: 'Chatroom successfully created!'
+        redirect_to @community_group, notice: 'Group successfully created!'
       else
         flash[:alert] = @community_group.errors.full_messages.join(", ")
         render :new, status: :unprocessable_entity
@@ -32,10 +32,10 @@ class CommunityGroupsController < ApplicationController
       @community_group = CommunityGroup.find(params[:id])
       
       if current_user.member_of?(@community_group)
-        redirect_to @community_group, alert: "Zaten bu grubun üyesisiniz."
+        redirect_to @community_group, alert: "You are already a member of this group."
       else
         @community_group.users << current_user
-        redirect_to @community_group, notice: "Gruba başarıyla katıldınız!"
+        redirect_to @community_group, notice: "Successfully joined the group!"
       end
     end
   
@@ -43,12 +43,12 @@ class CommunityGroupsController < ApplicationController
       @community_group = CommunityGroup.find(params[:id])
       
       if current_user == @community_group.creator
-        redirect_to @community_group, alert: "Grup kurucusu gruptan ayrılamaz."
+        redirect_to @community_group, alert: "Group creator cannot leave the group."
       elsif current_user.member_of?(@community_group)
         @community_group.users.delete(current_user)
-        redirect_to community_groups_path, notice: "Gruptan başarıyla ayrıldınız."
+        redirect_to community_groups_path, notice: "Successfully left the group."
       else
-        redirect_to @community_group, alert: "Bu grubun üyesi değilsiniz."
+        redirect_to @community_group, alert: "You are not a member of this group."
       end
     end
   
@@ -57,21 +57,21 @@ class CommunityGroupsController < ApplicationController
       
       if current_user == @community_group.creator
         if @community_group.destroy
-          flash[:notice] = "Grup başarıyla silindi."
+          flash[:notice] = "Group successfully deleted."
           redirect_to community_groups_path
         else
-          flash[:alert] = "Grup silinirken bir hata oluştu."
+          flash[:alert] = "An error occurred while deleting the group."
           redirect_to community_group_path(@community_group)
         end
       else
-        flash[:alert] = "Bu işlem için yetkiniz yok."
+        flash[:alert] = "You don't have permission for this action."
         redirect_to community_group_path(@community_group)
       end
     end
   
     def edit
       unless current_user == @community_group.creator
-        flash[:alert] = "Bu işlem için yetkiniz yok."
+        flash[:alert] = "You don't have permission for this action."
         redirect_to @community_group
       end
     end
@@ -81,7 +81,7 @@ class CommunityGroupsController < ApplicationController
         if @community_group.update(community_group_params)
           respond_to do |format|
             format.html { 
-              flash[:notice] = "Grup başarıyla güncellendi."
+              flash[:notice] = "Group successfully updated."
               redirect_to @community_group
             }
             format.json { 
@@ -106,7 +106,7 @@ class CommunityGroupsController < ApplicationController
           end
         end
       else
-        flash[:alert] = "Bu işlem için yetkiniz yok."
+        flash[:alert] = "You don't have permission for this action."
         redirect_to @community_group
       end
     end
@@ -115,7 +115,7 @@ class CommunityGroupsController < ApplicationController
 
     def require_user
       unless current_user
-        flash[:alert] = "You must be logged in to create a chatroom."
+        flash[:alert] = "You must be logged in to access this page."
         redirect_to login_path
       end
     end
@@ -123,7 +123,7 @@ class CommunityGroupsController < ApplicationController
     def set_community_group
       @community_group = CommunityGroup.find_by(id: params[:id])
       unless @community_group
-        flash[:alert] = "Chatroom not found."
+        flash[:alert] = "Group not found."
         redirect_to community_groups_path
       end
     end

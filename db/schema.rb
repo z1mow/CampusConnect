@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_31_064144) do
     t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "message_count", default: 0
+    t.integer "message_count"
   end
 
   create_table "direct_messages", force: :cascade do |t|

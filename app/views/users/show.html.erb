@@ -30,7 +30,7 @@
         <% if @user.student_class.present? %>
           <div class="detail-item">
             <i class="graduation cap icon"></i>
-            <%= @user.student_class %> Sınıf
+            <%= @user.student_class %> Class
           </div>
         <% end %>
       </div>
@@ -38,7 +38,7 @@
       <% if @user == current_user %>
         <%= link_to edit_user_path(@user), class: "edit-profile-btn" do %>
           <i class="edit icon"></i>
-          Profili Düzenle
+          Edit Profile
         <% end %>
       <% end %>
 
@@ -46,31 +46,31 @@
         <div class="friend-actions">
           <% if @is_friend %>
             <div class="ui buttons">
-              <%= button_to remove_friend_user_path(@user), method: :delete, class: "ui red button", data: { confirm: "Arkadaşlıktan çıkarmak istediğinize emin misiniz?" } do %>
-                <i class="user times icon"></i> Arkadaşlıktan Çıkar
+              <%= button_to remove_friend_user_path(@user), method: :delete, class: "ui red button", data: { confirm: "Are you sure you want to remove this friend?" } do %>
+                <i class="user times icon"></i> Remove Friend
               <% end %>
               <%= link_to chat_user_path(@user), class: "ui primary button" do %>
-                <i class="comment icon"></i> Mesaj Gönder
+                <i class="comment icon"></i> Send Message
               <% end %>
             </div>
           <% elsif @pending_request %>
             <% if @pending_request.friend_id == current_user.id %>
               <div class="ui buttons">
                 <%= button_to accept_friend_request_user_path(@user), method: :post, class: "ui positive button" do %>
-                  <i class="check icon"></i> Kabul Et
+                  <i class="check icon"></i> Accept
                 <% end %>
                 <%= button_to reject_friend_request_user_path(@user), method: :post, class: "ui negative button" do %>
-                  <i class="times icon"></i> Reddet
+                  <i class="times icon"></i> Reject
                 <% end %>
               </div>
             <% else %>
               <button class="ui basic button" disabled>
-                <i class="clock icon"></i> İstek Gönderildi
+                <i class="clock icon"></i> Request Sent
               </button>
             <% end %>
           <% elsif @can_send_request %>
             <%= button_to send_friend_request_user_path(@user), method: :post, class: "ui primary button" do %>
-              <i class="user plus icon"></i> Arkadaş Ekle
+              <i class="user plus icon"></i> Add Friend
             <% end %>
           <% end %>
         </div>
@@ -79,11 +79,11 @@
       <div class="profile-stats">
         <div class="stat-item">
           <i class="users icon"></i>
-          <%= pluralize(@community_groups.count, 'Topluluk') %>
+          <%= pluralize(@community_groups.count, 'Community') %>
         </div>
         <div class="stat-item">
           <i class="user friends icon"></i>
-          <%= pluralize(@user.friends.count, 'Arkadaş') %>
+          <%= pluralize(@user.friends.count, 'Friend') %>
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
   <div class="profile-groups">
     <h2>
       <i class="users icon"></i>
-      Üye Olduğu Topluluklar
+      Member Communities
     </h2>
     
     <div class="groups-grid">
@@ -105,10 +105,10 @@
           <div class="group-meta">
             <span>
               <i class="user icon"></i>
-              <%= group.users.count %> üye
+              <%= group.users.count %> members
             </span>
             <% if group.creator == @user %>
-              <span class="creator-badge">Kurucu</span>
+              <span class="creator-badge">Creator</span>
             <% end %>
           </div>
         <% end %>

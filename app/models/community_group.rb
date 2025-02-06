@@ -4,7 +4,7 @@ class CommunityGroup < ApplicationRecord
     validates :description, presence: true
     validates :category, presence: true, inclusion: { 
       in: %w[study club project department other],
-      message: "%{value} geçerli bir kategori değil" 
+      message: "%{value} is not a valid category" 
     }
 
     # Many-to-many relationship with User through GroupMember
@@ -16,7 +16,7 @@ class CommunityGroup < ApplicationRecord
 
     def badge_text
       if is_most_active_group?
-        'En Aktif Grup 👑'
+        'Most Active Group 👑'
       else
         ''
       end
@@ -42,9 +42,9 @@ class CommunityGroup < ApplicationRecord
 
       if result && result['last_message_at']
         time_ago = ((Time.current - result['last_message_at'].to_time) / 60).round
-        "Son mesajın üzerinden #{time_ago} dakika geçti"
+        "#{time_ago} minutes since last message"
       else
-        "Henüz mesaj yok"
+        "No messages yet"
       end
     end
 
