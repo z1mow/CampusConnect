@@ -30,7 +30,7 @@ gem "webpacker", "~> 5.0"
 gem "actioncable"
 gem "redis"
 gem "listen", "~> 3.7"
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.14"
 gem "minitest", "~> 5.0"
 gem "bigdecimal", "3.1.8"
 
